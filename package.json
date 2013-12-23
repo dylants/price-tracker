@@ -13,7 +13,8 @@
         "nodemon": "~0.7.2",
         "consolidate": "~0.10.0",
         "underscore": "~1.5.2",
-        "express-namespace": "~0.1.1"
+        "express-namespace": "~0.1.1",
+        "scraper": "~0.0.9"
     },
     "devDependencies": {
         "grunt": "~0.4.1",
