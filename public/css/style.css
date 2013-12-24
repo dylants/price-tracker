@@ -1,0 +1,23 @@
+body {
+    background-color: rgb(80, 80, 80);
+    background-image: url("/assets/img/wild_oliva.png");
+}
+h1, h2 {
+    text-align: center;
+    color: rgb(200, 200, 200);
+}
+.tracked-item {
+    background-color: rgb(230, 230, 230);
+    border: 1px solid rgb(200, 200, 200);
+    padding: 0.5em;
+    cursor: pointer;
+}
+.tracked-item:hover {
+    background-color: rgb(250, 250, 250);
+}
+.tracked-item-name {
+    position: absolute;
+}
+.tracked-item-price {
+    text-align: right;
+}
