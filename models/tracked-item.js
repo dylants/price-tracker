@@ -13,6 +13,9 @@ var TrackedItemSchema = new Schema({
     },
     bestPriceUri: {
         type: String
+    },
+    bestPriceDate: {
+        type: Date
     }
 });
 
