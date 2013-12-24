@@ -1,10 +1,9 @@
 require("express-namespace");
-require("js-yaml");
 var express = require("express"),
     fs = require("fs"),
     cons = require("consolidate"),
     app = express(),
-    config = require("./config.yaml");
+    mongoose = require("mongoose");
 
 // configure the app (all environments)
 app.configure(function() {
@@ -22,8 +21,24 @@ app.configure(function() {
     // use express' body parser to access body elements later
     app.use(express.bodyParser());
 
-    // read in the config and set it in the app to be accessed later
-    app.set("config", config);
+    /*
+     * Connect to mongoDB at localhost using the database "price-tracker".
+     * This connection will be used by the mongoose API throughout
+     * our code base.
+     */
+    mongoose.connect("mongodb://localhost/price-tracker", function(error) {
+        // handle the error case
+        if (error) {
+            console.error("Failed to connect to the Mongo server!!");
+            console.error(error);
+            throw error;
+        }
+    });
+
+    // bring in all models into scope (these use mongoose)
+    fs.readdirSync("models").forEach(function(modelName) {
+        require("./models/" + modelName);
+    });
 
     // pull in all the controllers (these contain routes)
     fs.readdirSync("controllers").forEach(function(controllerName) {

@@ -15,8 +15,8 @@
         "underscore": "~1.5.2",
         "express-namespace": "~0.1.1",
         "scraper": "~0.0.9",
-        "js-yaml": "~3.0.0",
-        "async": "~0.2.9"
+        "async": "~0.2.9",
+        "mongoose": "~3.8.3"
     },
     "devDependencies": {
         "grunt": "~0.4.1",
