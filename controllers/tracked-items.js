@@ -5,7 +5,7 @@ module.exports = function(app) {
     app.namespace("/api", function() {
 
         app.get("/tracked-items", function(req, res) {
-            TrackedItem.find(function(err, trackedItems) {
+            TrackedItem.find().populate("prices").exec(function(err, trackedItems) {
                 if (err) {
                     console.error(err);
                     res.send(500);

@@ -1,5 +1,6 @@
 var mongoose = require("mongoose"),
-    Schema = mongoose.Schema;
+    Schema = mongoose.Schema
+    Price = require("./price");
 
 var TrackedItemSchema = new Schema({
     name: {
@@ -8,15 +9,10 @@ var TrackedItemSchema = new Schema({
     uris: {
         type: Array
     },
-    bestPrice: {
-        type: Number
-    },
-    bestPriceUri: {
-        type: String
-    },
-    bestPriceDate: {
-        type: Date
-    }
+    prices: [{
+        type: mongoose.Schema.ObjectId,
+        ref: "Price"
+    }]
 });
 
 mongoose.model("TrackedItem", TrackedItemSchema);
