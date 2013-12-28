@@ -1,4 +1,5 @@
-var mongoose = require("mongoose"),
+var priceUpdater = require("../lib/price-updater"),
+    mongoose = require("mongoose"),
     TrackedItem = mongoose.model("TrackedItem");
 
 module.exports = function(app) {
@@ -17,17 +18,9 @@ module.exports = function(app) {
         });
 
         app.get("/tracked-items/update", function(req, res) {
-            var priceUpdater = require("../lib/price-updater");
-
-            priceUpdater.updateTrackedItems(function(err) {
-                if (err) {
-                    console.error(err);
-                    res.send(500);
-                    return;
-                }
-
-                res.send("done!");
-            });
+            // issue the request in the background, returning immediately
+            priceUpdater.updateTrackedItems();
+            res.send("update requested");
         });
     });
 };
