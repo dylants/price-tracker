@@ -1,6 +1,10 @@
-<div class="tracked-item col-md-offset-4 col-md-4">
+<div class="tracked-item col-md-offset-3 col-md-6">
     <div class="tracked-item-name">
-        <%- name %>
+        <% if (name.length > 50) { %>
+            <%- name.substring(0, 50).trim() + "..." %>
+        <% } else { %>
+            <%- name %>
+        <% } %>
     </div>
     <% if (prices.length > 0) { %>
         <div class="tracked-item-price">

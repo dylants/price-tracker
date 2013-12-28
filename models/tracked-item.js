@@ -6,6 +6,9 @@ var TrackedItemSchema = new Schema({
     name: {
         type: String
     },
+    category: {
+        type: String
+    },
     uris: {
         type: Array
     },
