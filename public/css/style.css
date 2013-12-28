@@ -21,3 +21,10 @@ h1, h2 {
 .tracked-item-price {
     text-align: right;
 }
+.old-price-outer {
+    color: rgb(150, 150, 150);
+    text-decoration: line-through;
+}
+.old-price-inner {
+    color: black;
+}

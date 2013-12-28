@@ -2,7 +2,18 @@
     <div class="tracked-item-name">
         <%- name %>
     </div>
-    <div class="tracked-item-price">
-        $<%- bestPrice %>
-    </div>
+    <% if (prices.length > 0) { %>
+        <div class="tracked-item-price">
+            <span class="current-price">$<%- prices[0].price %></span>
+            <% var i, price; %>
+            <% for (i=1; i<prices.length; i++) { %>
+                <% price = prices[i]; %>
+                <span class="old-price-outer">
+                    <span class="old-price-inner">
+                        $<%- price.price %>
+                    </span>
+                </span>
+            <% } %>
+        </div>
+    <% } %>
 </div>
