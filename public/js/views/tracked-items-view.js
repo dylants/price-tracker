@@ -3,8 +3,8 @@ define([
     "backbone",
     "underscore",
     "tracked-item-view",
-    "text!/assets/templates/tracked-items.html",
-    "text!/assets/templates/tracked-items-category.html"
+    "text!../templates/tracked-items.html",
+    "text!../templates/tracked-items-category.html"
 ], function(Backbone, _, TrackedItemView, trackedItemsHtml, trackedItemsCategoryHtml) {
     "use strict";
 

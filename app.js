@@ -49,7 +49,7 @@ app.configure(function() {
     app.use(app.router);
 
     // static assets processed after routes
-    app.use("/assets", express.static(__dirname + "/public"));
+    app.use("/public", express.static(__dirname + "/public"));
 });
 
 // configuration for development environment

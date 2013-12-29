@@ -1,6 +1,6 @@
 body {
     background-color: rgb(80, 80, 80);
-    background-image: url("/assets/img/wild_oliva.png");
+    background-image: url("/public/img/wild_oliva.png");
 }
 h1, h2 {
     text-align: center;

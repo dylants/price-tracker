@@ -2,7 +2,7 @@
 define([
     "backbone",
     "underscore",
-    "text!/assets/templates/tracked-item.html"
+    "text!../templates/tracked-item.html"
 ], function(Backbone, _, trackedItemHtml) {
     "use strict";
 
