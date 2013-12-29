@@ -6,7 +6,7 @@ require.config({
         "text": "/assets/js/lib/text",
         "moment": "/assets/js/lib/moment.min",
         "tracked-item-model": "/assets/js/models/tracked-item-model",
-        "tracked-items-collection": "/assets/js/models/tracked-items-collection",
+        "tracked-items-model": "/assets/js/models/tracked-items-model",
         "tracked-item-view": "/assets/js/views/tracked-item-view",
         "tracked-items-view": "/assets/js/views/tracked-items-view",
         "router": "/assets/js/router",

@@ -3,8 +3,9 @@ define([
     "backbone",
     "underscore",
     "tracked-item-view",
-    "text!/assets/templates/tracked-items.html"
-], function(Backbone, _, TrackedItemView, trackedItemsHtml) {
+    "text!/assets/templates/tracked-items.html",
+    "text!/assets/templates/tracked-items-category.html"
+], function(Backbone, _, TrackedItemView, trackedItemsHtml, trackedItemsCategoryHtml) {
     "use strict";
 
     return Backbone.View.extend({
@@ -12,11 +13,12 @@ define([
         el: "#main",
 
         template: _.template(trackedItemsHtml),
+        templateCategory: _.template(trackedItemsCategoryHtml),
 
         events: {},
 
         initialize: function() {
-            this.collection.on( "sync", this.renderTrackedItems, this );
+            this.model.on( "sync", this.renderTrackedItems, this );
         },
 
         close: function() {
@@ -31,19 +33,38 @@ define([
         },
 
         renderTrackedItems: function() {
-            var trackedItemsSelector;
+            var trackedItemsSelector, trackedItems, categories, count, that;
 
             trackedItemsSelector = $("#tracked-items");
             // clear the existing tracked items
             trackedItemsSelector.empty();
 
-            this.collection.each(function(trackedItem) {
-                var trackedItemView;
+            trackedItems = this.model.toJSON();
+            categories = _.keys(trackedItems);
 
-                trackedItemView = new TrackedItemView({
-                    model: trackedItem
+            count = 0;
+            that = this;
+            categories.forEach(function(category) {
+                var categoryHtml, categorySelector, trackedItemsPerCategory;
+
+                categoryHtml = "category" + count;
+                count++;
+                // render the category
+                trackedItemsSelector.append(that.templateCategory({
+                    category: category,
+                    categoryHtml: categoryHtml
+                }));
+                categorySelector = $("#tracked-items-" + categoryHtml);
+
+                trackedItemsPerCategory = trackedItems[category];
+                trackedItemsPerCategory.forEach(function(trackedItem) {
+                    var trackedItemView;
+
+                    trackedItemView = new TrackedItemView({
+                        model: trackedItem
+                    });
+                    categorySelector.append(trackedItemView.render().el);
                 });
-                trackedItemsSelector.append(trackedItemView.render().el);
             });
 
             return this;

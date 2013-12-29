@@ -5,10 +5,8 @@ define([
 ], function(Backbone, TrackedItemModel) {
     "use strict";
 
-    return Backbone.Collection.extend({
-        url: "/api/tracked-items",
-
-        model: TrackedItemModel,
+    return Backbone.Model.extend({
+        url: "/api/tracked-items-ui",
 
         initialize: function() {
             this.fetch();
