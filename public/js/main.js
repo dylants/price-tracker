@@ -5,6 +5,7 @@ require.config({
         "jquery": "lib/jquery-2.0.3",
         "text": "lib/text",
         "moment": "lib/moment.min",
+        "accounting": "lib/accounting.min",
         "tracked-item-model": "models/tracked-item-model",
         "tracked-items-model": "models/tracked-items-model",
         "tracked-item-view": "views/tracked-item-view",

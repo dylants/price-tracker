@@ -2,8 +2,9 @@
 define([
     "backbone",
     "underscore",
+    "accounting",
     "text!../templates/tracked-item.html"
-], function(Backbone, _, trackedItemHtml) {
+], function(Backbone, _, accounting, trackedItemHtml) {
     "use strict";
 
     return Backbone.View.extend({
@@ -21,7 +22,15 @@ define([
         },
 
         render: function() {
-            this.$el.html(this.template(this.model));
+            var model;
+
+            // because we're using accounting, and it's an unnamed module,
+            // we must specifically pass it to the template on rendering so
+            // it has it in scope.
+            model = this.model;
+            model.accounting = accounting;
+
+            this.$el.html(this.template(model));
             return this;
         }
     });
