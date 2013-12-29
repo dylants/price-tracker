@@ -8,6 +8,7 @@ require.config({
         "accounting": "lib/accounting.min",
         "tracked-item-model": "models/tracked-item-model",
         "tracked-items-model": "models/tracked-items-model",
+        "add-tracked-item-view": "views/add-tracked-item-view",
         "tracked-item-view": "views/tracked-item-view",
         "tracked-items-view": "views/tracked-items-view",
         "router": "router",

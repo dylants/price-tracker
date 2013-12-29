@@ -34,3 +34,25 @@ h1, h2 {
 .old-price-inner {
     color: black;
 }
+#add-tracked-item {
+    text-align: center;
+}
+#add-tracked-item-button {
+    background-color: rgb(200, 200, 200);
+    margin-top: 3em;
+    margin-bottom: 1em;
+    width: 15em;
+}
+#add-tracked-item-button:hover {
+    background-color: rgb(230, 230, 230);
+}
+.add-tracked-item-label {
+    color: rgb(200, 200, 200);
+}
+.add-tracked-item-buttons {
+    text-align: center;
+}
+.add-tracked-item-button {
+    margin: 1em;
+    width: 10em;
+}

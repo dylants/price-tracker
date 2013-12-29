@@ -15,7 +15,9 @@ define([
         template: _.template(trackedItemsHtml),
         templateCategory: _.template(trackedItemsCategoryHtml),
 
-        events: {},
+        events: {
+            "click #add-tracked-item-button": "addTrackedItem"
+        },
 
         initialize: function() {
             this.model.on( "sync", this.renderTrackedItems, this );
@@ -68,6 +70,14 @@ define([
             });
 
             return this;
+        },
+
+        addTrackedItem: function(ev) {
+            ev.preventDefault();
+
+            Backbone.history.navigate("add-tracked-item", {
+                trigger: true
+            });
         }
     });
 });

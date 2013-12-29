@@ -3,16 +3,18 @@ define([
     "backbone",
     "jquery",
     "tracked-items-model",
-    "tracked-items-view"
-], function(Backbone, $, TrackedItemsModel, TrackedItemsView) {
+    "tracked-items-view",
+    "add-tracked-item-view"
+], function(Backbone, $, TrackedItemsModel, TrackedItemsView, AddTrackedItemView) {
     "use strict";
 
-    var trackedItemsModel, trackedItemsView;
+    var trackedItemsModel, trackedItemsView, addTrackedItemView;
 
     var Router = Backbone.Router.extend({
         routes: {
             "": "defaultRoute",
             "tracked-items": "trackedItems",
+            "add-tracked-item": "addTrackedItem",
             "*invalidRoute": "badRoute"
         },
 
@@ -41,6 +43,15 @@ define([
                 model: trackedItemsModel
             });
             trackedItemsView.render();
+        },
+
+        addTrackedItem: function() {
+            if (addTrackedItemView) {
+                addTrackedItemView.close();
+            }
+
+            addTrackedItemView = new AddTrackedItemView();
+            addTrackedItemView.render();
         },
 
         badRoute: function(invalidRoute) {
