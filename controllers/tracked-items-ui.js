@@ -1,6 +1,7 @@
 var priceUpdater = require("../lib/price-updater"),
     mongoose = require("mongoose"),
-    TrackedItem = mongoose.model("TrackedItem");
+    TrackedItem = mongoose.model("TrackedItem"),
+    Price = mongoose.model("Price");
 
 module.exports = function(app) {
     app.namespace("/api", function() {
@@ -34,19 +35,69 @@ module.exports = function(app) {
         });
 
         app.post("/tracked-items-ui", function(req, res) {
-            var uri;
-            console.log(req.body);
+            var uri, name, category, price, trackedItem;
 
+            // gather information from request body
             uri = req.body.uri;
-            priceUpdater.gatherItemDetails(uri, function(err, itemDetails) {
-                if (err) {
-                    console.error(err);
-                    res.send(500);
-                    return;
-                }
+            name = req.body.name;
+            category = req.body.category;
+            price = req.body.price;
 
-                res.send(200, itemDetails);
-            });
+            // check to see if this POST has all the information
+            if (name && category && price && uri) {
+                // create a new tracked item
+                trackedItem = new TrackedItem({
+                    name: name,
+                    category: category,
+                    uris: [uri]
+                });
+                trackedItem.save(function(err, trackedItem) {
+                    var priceModel;
+
+                    if (err) {
+                        console.error(err);
+                        res.send(500);
+                        return;
+                    }
+
+                    // create a price
+                    priceModel = new Price({
+                        price: price,
+                        uri: uri,
+                        dateEstablished: new Date()
+                    });
+                    priceModel.save(function(err, priceModel) {
+                        if (err) {
+                            console.error(err);
+                            res.send(500);
+                            return;
+                        }
+
+                        // add the price to our tracked item
+                        trackedItem.prices.push(priceModel);
+                        trackedItem.save(function(err, trackedItem) {
+                            if (err) {
+                                console.error(err);
+                                res.send(500);
+                                return;
+                            }
+
+                            res.send(201, trackedItem);
+                        });
+                    });
+                });
+            } else {
+                // assume this is just a request to gather item details
+                priceUpdater.gatherItemDetails(uri, function(err, itemDetails) {
+                    if (err) {
+                        console.error(err);
+                        res.send(500);
+                        return;
+                    }
+
+                    res.send(200, itemDetails);
+                });
+            }
         });
 
     });

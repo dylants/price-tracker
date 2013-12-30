@@ -14,6 +14,7 @@ define([
 
         events: {
             "click #populate": "populate",
+            "click #add": "add",
             "click #cancel": "cancel"
         },
 
@@ -51,17 +52,41 @@ define([
             uri = $("input[id='uri']").val();
 
             that = this;
-            // use patch to just send the uri
             this.model.save({
                 uri: uri
             }, {
-                patch: true,
-                success: function(model, resp, options) {
+                success: function(model, response, options) {
                     that.render();
                 }
             });
 
             this.renderWaiting(uri);
+        },
+
+        add: function(ev) {
+            var uri, name, category, price;
+
+            ev.preventDefault();
+
+            uri = $("input[id='uri']").val();
+            name = $("input[id='name']").val();
+            category = $("input[id='category']").val();
+            price = $("input[id='price']").val();
+
+            this.model.save({
+                uri: uri,
+                name: name,
+                category: category,
+                price: price
+            }, {
+                success: function(model, response, options) {
+                    Backbone.history.navigate("tracked-items", {
+                        trigger: true
+                    });
+                }
+            });
+
+            // TODO disable submit button to prevent double submit
         },
 
         cancel: function(ev) {
