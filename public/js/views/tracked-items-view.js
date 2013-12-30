@@ -31,6 +31,11 @@ define([
 
         render: function() {
             this.$el.html(this.template());
+
+            // fetch on the model which will trigger the sync, and
+            // call the renderTrackedItems function
+            this.model.fetch();
+
             return this;
         },
 

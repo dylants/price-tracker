@@ -56,3 +56,15 @@ h1, h2 {
     margin: 1em;
     width: 10em;
 }
+.waiting {
+    text-align: center;
+    color: rgb(200, 200, 200);
+    font-size: x-large;
+    margin-bottom: 1em;
+}
+/* small */
+ @media (max-width: 992px) {
+    #price-label {
+        margin-top: 1em;
+    }
+ }

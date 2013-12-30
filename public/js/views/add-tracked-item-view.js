@@ -14,7 +14,7 @@ define([
 
         events: {
             "click #populate": "populate",
-            "click .cancel": "cancel"
+            "click #cancel": "cancel"
         },
 
         initialize: function() {},
@@ -26,14 +26,42 @@ define([
         },
 
         render: function() {
-            this.$el.html(this.template());
+            $(".waiting").Loadingdotdotdot("stop");
+            this.$el.html(this.template(this.model.toJSON()));
             return this;
         },
 
+        renderWaiting: function(uri) {
+            this.$el.html(this.template({
+                uri: uri,
+                waiting: true
+            }));
+            $(".waiting").Loadingdotdotdot({
+                "speed": 300,
+                "maxDots": 4,
+                "word": "Loading item details"
+            });
+        },
+
         populate: function(ev) {
+            var uri, that;
+
             ev.preventDefault();
 
-            console.log("populate!");
+            uri = $("input[id='uri']").val();
+
+            that = this;
+            // use patch to just send the uri
+            this.model.save({
+                uri: uri
+            }, {
+                patch: true,
+                success: function(model, resp, options) {
+                    that.render();
+                }
+            });
+
+            this.renderWaiting(uri);
         },
 
         cancel: function(ev) {

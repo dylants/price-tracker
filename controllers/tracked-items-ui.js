@@ -1,4 +1,5 @@
-var mongoose = require("mongoose"),
+var priceUpdater = require("../lib/price-updater"),
+    mongoose = require("mongoose"),
     TrackedItem = mongoose.model("TrackedItem");
 
 module.exports = function(app) {
@@ -29,6 +30,22 @@ module.exports = function(app) {
                 }
 
                 res.send(trackedItemsUI);
+            });
+        });
+
+        app.post("/tracked-items-ui", function(req, res) {
+            var uri;
+            console.log(req.body);
+
+            uri = req.body.uri;
+            priceUpdater.gatherItemDetails(uri, function(err, itemDetails) {
+                if (err) {
+                    console.error(err);
+                    res.send(500);
+                    return;
+                }
+
+                res.send(200, itemDetails);
             });
         });
 

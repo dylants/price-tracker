@@ -4,7 +4,9 @@ define([
     "backbone",
     "router",
     // our app requires moment
-    "moment"
+    "moment",
+    // our app uses the loading dot dot dot jquery plugin
+    "jquery.loadingdotdotdot"
 ], function($, Backbone, Router) {
     "use-strict";
 

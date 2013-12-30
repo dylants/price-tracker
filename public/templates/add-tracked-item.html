@@ -3,16 +3,51 @@
 <h2>Item Details</h2>
 
 <form class="form-horizontal" role="form">
-    <div class="form-group">
+    <div class="item-row form-group">
         <label for="uri" class="add-tracked-item-label col-md-2 col-md-offset-1 control-label">URI</label>
         <div class="col-md-6">
-            <input type="text" class="form-control" id="uri" placeholder="Website address">
+            <% if (typeof uri !== "undefined") { %>
+                <input type="text" class="form-control" id="uri" placeholder="Website address" value="<%- uri %>">
+            <% } else { %>
+                <input type="text" class="form-control" id="uri" placeholder="Website address">
+            <% } %>
         </div>
     </div>
-    <div class="form-group">
-        <div class="add-tracked-item-buttons">
-            <button id="populate" class="add-tracked-item-button btn btn-default">Populate Details</button>
-            <button class="add-tracked-item-button cancel btn btn-default">Cancel</button>
+    <% if ((typeof name !== "undefined") && (typeof category !== "undefined") && (typeof price !== "undefined")) { %>
+        <div class="item-row form-group">
+            <label for="name" class="add-tracked-item-label col-md-2 col-md-offset-1 control-label">NAME</label>
+            <div class="col-md-6">
+                <input type="text" class="form-control" id="name" placeholder="Item Name" value="<%- name %>">
+            </div>
         </div>
-    </div>
+        <div class="item-row form-group">
+            <label for="category" class="add-tracked-item-label col-md-2 col-md-offset-1 control-label">CATEGORY</label>
+            <div class="col-md-2">
+                <input type="text" class="form-control" id="category" placeholder="Category" value="<%- category %>">
+            </div>
+            <label for="price" id="price-label" class="add-tracked-item-label col-md-2 control-label">PRICE</label>
+            <div class="col-md-2">
+                <input type="text" class="form-control" id="price" placeholder="Price" value="<%- price %>">
+            </div>
+        </div>
+        <div class="item-row form-group">
+            <div class="add-tracked-item-buttons">
+                <button id="add" class="add-tracked-item-button btn btn-default">Add Item</button>
+                <button id="cancel" class="add-tracked-item-button btn btn-default">Cancel</button>
+            </div>
+        </div>
+    <% } else if ((typeof waiting !== "undefined") && waiting) { %>
+        <div class="item-row form-group">
+            <div class="waiting">
+                <p>Loading item details...</p>
+            </div>
+        </div>
+    <% } else { %>
+        <div class="item-row form-group">
+            <div class="add-tracked-item-buttons">
+                <button id="populate" class="add-tracked-item-button btn btn-default">Populate Details</button>
+                <button id="cancel" class="add-tracked-item-button btn btn-default">Cancel</button>
+            </div>
+        </div>
+    <% } %>
 </form>
