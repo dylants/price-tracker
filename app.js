@@ -7,8 +7,8 @@ var express = require("express"),
 
 // configure the app (all environments)
 app.configure(function() {
-    // set the port
-    app.set("port", 3000);
+    // read the port from the environment, else set to 3000
+    app.set("port", process.env.PORT || 3000);
 
     // configure view rendering (underscore)
     app.engine("html", cons.underscore);
@@ -48,7 +48,7 @@ app.configure(function() {
     // lock the router to process routes up to this point
     app.use(app.router);
 
-    // static assets processed after routes
+    // static assets processed after routes, mapped to /public
     app.use("/public", express.static(__dirname + "/public"));
 });
 
