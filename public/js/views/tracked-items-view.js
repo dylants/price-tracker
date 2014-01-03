@@ -2,10 +2,12 @@
 define([
     "backbone",
     "underscore",
+    "tracked-items-ui-model",
     "tracked-item-view",
     "text!../templates/tracked-items.html",
     "text!../templates/tracked-items-category.html"
-], function(Backbone, _, TrackedItemView, trackedItemsHtml, trackedItemsCategoryHtml) {
+], function(Backbone, _, TrackedItemModel, TrackedItemView, trackedItemsHtml,
+    trackedItemsCategoryHtml) {
     "use strict";
 
     return Backbone.View.extend({
@@ -65,10 +67,11 @@ define([
 
                 trackedItemsPerCategory = trackedItems[category];
                 trackedItemsPerCategory.forEach(function(trackedItem) {
-                    var trackedItemView;
+                    var trackedItemModel, trackedItemView;
 
+                    trackedItemModel = new TrackedItemModel(trackedItem);
                     trackedItemView = new TrackedItemView({
-                        model: trackedItem
+                        model: trackedItemModel
                     });
                     categorySelector.append(trackedItemView.render().el);
                 });

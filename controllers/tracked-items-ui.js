@@ -100,6 +100,37 @@ module.exports = function(app) {
             }
         });
 
+        app.patch("/tracked-items-ui/:id", function(req, res) {
+            TrackedItem.findById(req.params.id, function(err, trackedItem) {
+                var name;
+
+                if (err) {
+                    console.error(err);
+                    res.send(500);
+                    return;
+                }
+
+                // currently we support updating the name only
+                name = req.body.name;
+                if (name && trackedItem.name !== name) {
+                    console.log("updating name of tracked item to: " + name);
+                    trackedItem.name = name;
+                    trackedItem.save(function(err, trackedItem) {
+                        if (err) {
+                            console.error(err);
+                            res.send(500);
+                            return;
+                        }
+
+                        res.send(200, trackedItem);
+                    });
+                } else {
+                    console.log("name not found or not different, ignoring");
+                    res.send(200, trackedItem);
+                }
+            });
+        });
+
     });
 };
 
@@ -107,6 +138,7 @@ function generateTrackedItemUI(trackedItem) {
     var trackedItemUI, i;
 
     trackedItemUI = {};
+    trackedItemUI.id = trackedItem.id;
     trackedItemUI.name = trackedItem.name;
     // does this tracked item has a price?
     if (trackedItem.prices.length > 0) {

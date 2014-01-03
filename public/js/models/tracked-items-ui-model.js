@@ -5,6 +5,6 @@ define([
     "use strict";
 
     return Backbone.Model.extend({
-        url: "/api/tracked-items-ui"
+        urlRoot: "/api/tracked-items-ui"
     });
 });
