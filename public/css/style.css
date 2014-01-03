@@ -27,6 +27,12 @@ h1, h2 {
 .tracked-item-price {
     text-align: right;
 }
+.lower-price {
+    color: rgb(30, 135, 30);
+}
+.higher-price {
+    color: rgb(185, 60, 60);
+}
 .old-price-outer {
     color: rgb(150, 150, 150);
     text-decoration: line-through;

@@ -22,7 +22,15 @@
         </div>
         <% if (typeof currentPrice != "undefined") { %>
             <div class="tracked-item-price">
-                <span class="current-price"><%- accounting.formatMoney(currentPrice) %></span>
+                <% if (pastPrices[0]) { %>
+                    <% if (currentPrice < pastPrices[0].price) { %>
+                        <span class="current-price lower-price"><%- accounting.formatMoney(currentPrice) %></span>
+                    <% } else { %>
+                        <span class="current-price higher-price"><%- accounting.formatMoney(currentPrice) %></span>
+                    <% } %>
+                <% } else { %>
+                    <span class="current-price"><%- accounting.formatMoney(currentPrice) %></span>
+                <% } %>
                 <% var i, pastPrice; %>
                 <% for (i=0; i<pastPrices.length; i++) { %>
                     <% pastPrice = pastPrices[i]; %>
