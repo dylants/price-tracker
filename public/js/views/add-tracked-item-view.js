@@ -57,6 +57,11 @@ define([
             }, {
                 success: function(model, response, options) {
                     that.render();
+                },
+                error: function(model, response, options) {
+                    console.error("unable to populate item details");
+                    console.error("response: " + JSON.stringify(response));
+                    that.render();
                 }
             });
 
