@@ -55,14 +55,14 @@ h3 {
 #add-tracked-item-button:hover {
     background-color: rgb(230, 230, 230);
 }
-.add-tracked-item-label {
+.add-tracked-item-label, .tracked-item-details-label {
     color: rgb(200, 200, 200);
     text-transform: uppercase;
 }
-.add-tracked-item-buttons {
+.add-tracked-item-buttons, .tracked-item-details-buttons {
     text-align: center;
 }
-.add-tracked-item-button {
+.add-tracked-item-button, .tracked-item-details-button {
     background-color: rgb(200, 200, 200);
     margin: 1em;
     width: 15em;
@@ -78,4 +78,4 @@ h3 {
     #subcategory-label {
         margin-top: 1em;
     }
- }
+}

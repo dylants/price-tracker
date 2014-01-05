@@ -1,0 +1,32 @@
+<form class="form-horizontal" role="form">
+
+    <div class="item-row form-group">
+        <label for="name" class="tracked-item-details-label col-md-2 col-md-offset-1 control-label">Name</label>
+        <div class="col-md-6">
+            <input type="text" class="form-control" id="name" placeholder="Item Name" value="<%- name %>">
+        </div>
+    </div>
+    <div class="item-row form-group">
+        <label for="category" class="tracked-item-details-label col-md-2 col-md-offset-1 control-label">Category</label>
+        <div class="col-md-2">
+            <input type="text" class="form-control" id="category" placeholder="Category" value="<%- category %>">
+        </div>
+        <label for="subcategory" id="subcategory-label" class="tracked-item-details-label col-md-2 control-label">Subcategory</label>
+        <div class="col-md-2">
+            <input type="text" class="form-control" id="subcategory" placeholder="Subcategory" value="">
+        </div>
+    </div>
+    <div class="item-row form-group">
+        <label for="current-price" class="tracked-item-details-label col-md-2 col-md-offset-3 control-label">Current Price</label>
+        <div class="col-md-2">
+            <input type="text" class="form-control" id="current-price" value="<%- currentPrice %>" disabled>
+        </div>
+    </div>
+    <div class="item-row form-group">
+        <div class="tracked-item-details-buttons">
+            <button id="update" class="tracked-item-details-button btn btn-default">Update</button>
+            <button id="cancel" class="tracked-item-details-button btn btn-default">Cancel</button>
+        </div>
+    </div>
+
+</form>

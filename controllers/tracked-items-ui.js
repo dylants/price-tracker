@@ -62,11 +62,22 @@ module.exports = function(app) {
                                 return 0;
                             }
                         });
-                        console.log("hi");
                     }
                 });
 
                 res.send(trackedItemsUI);
+            });
+        });
+
+        app.get("/tracked-items-ui/:id", function(req, res) {
+            TrackedItem.findById(req.params.id).populate("prices").exec(function(err, trackedItem) {
+                if (err) {
+                    console.error(err);
+                    res.send(500);
+                    return;
+                }
+
+                res.send(generateTrackedItemUI(trackedItem));
             });
         });
 
@@ -140,7 +151,7 @@ module.exports = function(app) {
 
         app.patch("/tracked-items-ui/:id", function(req, res) {
             TrackedItem.findById(req.params.id, function(err, trackedItem) {
-                var name;
+                var name, category, subcategory, update;
 
                 if (err) {
                     console.error(err);
@@ -148,11 +159,29 @@ module.exports = function(app) {
                     return;
                 }
 
-                // currently we support updating the name only
+                // currently we support updating the name, category, and
+                // subcategory only
                 name = req.body.name;
+                category = req.body.category;
+                subcategory = req.body.subcategory;
+
                 if (name && trackedItem.name !== name) {
                     console.log("updating name of tracked item to: " + name);
                     trackedItem.name = name;
+                    update = true;
+                }
+                if (category && trackedItem.category !== category) {
+                    console.log("updating category of tracked item to: " + category);
+                    trackedItem.category = category;
+                    update = true;
+                }
+                if (subcategory && trackedItem.subcategory !== subcategory) {
+                    console.log("updating subcategory of tracked item to: " + subcategory);
+                    trackedItem.subcategory = subcategory;
+                    update = true;
+                }
+
+                if (update) {
                     trackedItem.save(function(err, trackedItem) {
                         if (err) {
                             console.error(err);
@@ -163,7 +192,7 @@ module.exports = function(app) {
                         res.send(200, trackedItem);
                     });
                 } else {
-                    console.log("name not found or not different, ignoring");
+                    console.log("no changes found to be made, ignoring");
                     res.send(200, trackedItem);
                 }
             });
@@ -179,7 +208,7 @@ function generateTrackedItemUI(trackedItem) {
     trackedItemUI.id = trackedItem.id;
     trackedItemUI.name = trackedItem.name;
     trackedItemUI.category = trackedItem.category;
-    trackedItemUI.subcategory = trackedItem.subcategory;
+    trackedItemUI.subcategory = trackedItem.subcategory ? trackedItem.subcategory : "";
     // does this tracked item has a price?
     if (trackedItem.prices.length > 0) {
         trackedItemUI.currentPrice = trackedItem.prices[0].price;

@@ -39,21 +39,8 @@ define([
         viewItemDetails: function(ev) {
             ev.preventDefault();
 
-            console.log(this.model.id);
-        },
-
-        updateItemDetails: function(ev) {
-            var name;
-
-            ev.preventDefault();
-
-            // TODO replace with updated name
-            name = this.model.toJSON().name;
-
-            this.model.save({
-                name: name
-            }, {
-                patch: true
+            Backbone.history.navigate("tracked-item-details/" + this.model.id, {
+                trigger: true
             });
         }
     });
