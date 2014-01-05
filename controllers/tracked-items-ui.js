@@ -1,4 +1,5 @@
 var priceUpdater = require("../lib/price-updater"),
+    _ = require("underscore"),
     mongoose = require("mongoose"),
     TrackedItem = mongoose.model("TrackedItem"),
     Price = mongoose.model("Price");
@@ -8,7 +9,7 @@ module.exports = function(app) {
 
         app.get("/tracked-items-ui", function(req, res) {
             TrackedItem.find().populate("prices").exec(function(err, trackedItems) {
-                var trackedItemsUI, i, trackedItem, category, subcategory;
+                var trackedItemsUI, i, trackedItem, category, subcategory, categories;
 
                 if (err) {
                     console.error(err);
@@ -39,6 +40,31 @@ module.exports = function(app) {
                     trackedItemsUI[category].trackedItems.push(
                         generateTrackedItemUI(trackedItem));
                 }
+
+                // sort the tracked items that are within subcategories
+                categories = _.keys(trackedItemsUI);
+                categories.forEach(function(category) {
+                    var hasSubcategories;
+
+                    hasSubcategories = trackedItemsUI[category].hasSubcategories;
+                    // only do this sorting if subcategories exist
+                    if (hasSubcategories) {
+                        // sort so the tracked items with a subcategory appear
+                        // earlier in the array than those without, so in the end
+                        // those without a subcategory in a category with subcategories
+                        // appear at the end of the array.
+                        trackedItemsUI[category].trackedItems.sort(function(tiA, tiB) {
+                            if (tiA.subcategory && !tiB.subcategory) {
+                                return -1;
+                            } else if (!tiA.subcategory && tiB.subcategory) {
+                                return 1;
+                            } else {
+                                return 0;
+                            }
+                        });
+                        console.log("hi");
+                    }
+                });
 
                 res.send(trackedItemsUI);
             });
