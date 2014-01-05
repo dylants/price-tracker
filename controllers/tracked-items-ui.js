@@ -8,7 +8,7 @@ module.exports = function(app) {
 
         app.get("/tracked-items-ui", function(req, res) {
             TrackedItem.find().populate("prices").exec(function(err, trackedItems) {
-                var trackedItemsUI, i, trackedItem, category;
+                var trackedItemsUI, i, trackedItem, category, subcategory;
 
                 if (err) {
                     console.error(err);
@@ -16,18 +16,28 @@ module.exports = function(app) {
                     return;
                 }
 
-                // create an object that contains all the tracked items, but keyed
-                // off the category of those items
                 trackedItemsUI = {};
 
                 for (i = 0; i < trackedItems.length; i++) {
                     trackedItem = trackedItems[i];
                     category = trackedItem.category;
+                    subcategory = trackedItem.subcategory;
 
+                    // setup this category if it doesn't yet exist
                     if (!trackedItemsUI[category]) {
-                        trackedItemsUI[category] = [];
+                        trackedItemsUI[category] = {};
+                        trackedItemsUI[category].trackedItems = [];
+                        trackedItemsUI[category].hasSubcategories = false;
                     }
-                    trackedItemsUI[category].push(generateTrackedItemUI(trackedItem));
+
+                    // note if this category has subcategories
+                    if (subcategory) {
+                        trackedItemsUI[category].hasSubcategories = true;
+                    }
+
+                    // add the tracked item UI
+                    trackedItemsUI[category].trackedItems.push(
+                        generateTrackedItemUI(trackedItem));
                 }
 
                 res.send(trackedItemsUI);
@@ -35,20 +45,22 @@ module.exports = function(app) {
         });
 
         app.post("/tracked-items-ui", function(req, res) {
-            var uri, name, category, price, trackedItem;
+            var uri, name, category, subcategory, price, trackedItem;
 
             // gather information from request body
             uri = req.body.uri;
             name = req.body.name;
             category = req.body.category;
+            subcategory = req.body.subcategory;
             price = req.body.price;
 
-            // check to see if this POST has all the information
+            // check to see if this POST has all the required information
             if (name && category && price && uri) {
                 // create a new tracked item
                 trackedItem = new TrackedItem({
                     name: name,
                     category: category,
+                    subcategory: subcategory,
                     uris: [uri]
                 });
                 trackedItem.save(function(err, trackedItem) {
@@ -140,6 +152,8 @@ function generateTrackedItemUI(trackedItem) {
     trackedItemUI = {};
     trackedItemUI.id = trackedItem.id;
     trackedItemUI.name = trackedItem.name;
+    trackedItemUI.category = trackedItem.category;
+    trackedItemUI.subcategory = trackedItem.subcategory;
     // does this tracked item has a price?
     if (trackedItem.prices.length > 0) {
         trackedItemUI.currentPrice = trackedItem.prices[0].price;

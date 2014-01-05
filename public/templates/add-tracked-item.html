@@ -15,17 +15,23 @@
     </div>
     <% if ((typeof name !== "undefined") && (typeof category !== "undefined") && (typeof price !== "undefined")) { %>
         <div class="item-row form-group">
-            <label for="name" class="add-tracked-item-label col-md-2 col-md-offset-1 control-label">NAME</label>
+            <label for="name" class="add-tracked-item-label col-md-2 col-md-offset-1 control-label">Name</label>
             <div class="col-md-6">
                 <input type="text" class="form-control" id="name" placeholder="Item Name" value="<%- name %>">
             </div>
         </div>
         <div class="item-row form-group">
-            <label for="category" class="add-tracked-item-label col-md-2 col-md-offset-1 control-label">CATEGORY</label>
+            <label for="category" class="add-tracked-item-label col-md-2 col-md-offset-1 control-label">Category</label>
             <div class="col-md-2">
                 <input type="text" class="form-control" id="category" placeholder="Category" value="<%- category %>">
             </div>
-            <label for="price" id="price-label" class="add-tracked-item-label col-md-2 control-label">PRICE</label>
+            <label for="subcategory" id="subcategory-label" class="add-tracked-item-label col-md-2 control-label">Subcategory</label>
+            <div class="col-md-2">
+                <input type="text" class="form-control" id="subcategory" placeholder="Subcategory" value="">
+            </div>
+        </div>
+        <div class="item-row form-group">
+            <label for="price" class="add-tracked-item-label col-md-2 col-md-offset-3 control-label">Price</label>
             <div class="col-md-2">
                 <input type="text" class="form-control" id="price" placeholder="Price" value="<%- price %>">
             </div>

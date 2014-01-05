@@ -64,19 +64,21 @@ define([
         },
 
         add: function(ev) {
-            var uri, name, category, price;
+            var uri, name, category, subcategory, price;
 
             ev.preventDefault();
 
             uri = $("input[id='uri']").val();
             name = $("input[id='name']").val();
             category = $("input[id='category']").val();
+            subcategory = $("input[id='subcategory']").val();
             price = $("input[id='price']").val();
 
             this.model.save({
                 uri: uri,
                 name: name,
                 category: category,
+                subcategory: subcategory,
                 price: price
             }, {
                 success: function(model, response, options) {

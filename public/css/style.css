@@ -6,6 +6,9 @@ h1, h2 {
     text-align: center;
     color: rgb(200, 200, 200);
 }
+h3 {
+    color: rgb(200, 200, 200);
+}
 .tracked-items-category {
     margin-top: 2em;
 }
@@ -54,6 +57,7 @@ h1, h2 {
 }
 .add-tracked-item-label {
     color: rgb(200, 200, 200);
+    text-transform: uppercase;
 }
 .add-tracked-item-buttons {
     text-align: center;
@@ -71,7 +75,7 @@ h1, h2 {
 }
 /* small */
  @media (max-width: 992px) {
-    #price-label {
+    #subcategory-label {
         margin-top: 1em;
     }
  }
