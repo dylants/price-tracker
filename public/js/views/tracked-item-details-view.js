@@ -17,7 +17,8 @@ define([
         templateDetails: _.template(trackedItemDetailsHtml),
 
         events: {
-            "click #update": "update",
+            "click #update": "updateTrackedItem",
+            "click #delete": "deleteTrackedItem",
             "click #cancel": "cancel"
         },
 
@@ -57,7 +58,7 @@ define([
             return this;
         },
 
-        update: function(ev) {
+        updateTrackedItem: function(ev) {
             var uri, name, category, subcategory;
 
             ev.preventDefault();
@@ -74,6 +75,18 @@ define([
                 subcategory: subcategory
             }, {
                 patch: true,
+                success: function(model, response, options) {
+                    Backbone.history.navigate("tracked-items", {
+                        trigger: true
+                    });
+                }
+            });
+        },
+
+        deleteTrackedItem: function(ev) {
+            ev.preventDefault();
+
+            this.model.destroy({
                 success: function(model, response, options) {
                     Backbone.history.navigate("tracked-items", {
                         trigger: true

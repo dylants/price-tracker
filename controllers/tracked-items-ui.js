@@ -198,6 +198,22 @@ module.exports = function(app) {
             });
         });
 
+        app.delete("/tracked-items-ui/:id", function(req, res) {
+            TrackedItem.findByIdAndRemove(req.params.id, function(err, trackedItem) {
+                if (err) {
+                    console.error(err);
+                    res.send(500);
+                    return;
+                }
+
+                // with no errors, respond with success if the trackedItem existed
+                if (trackedItem === null) {
+                    res.send(404);
+                } else {
+                    res.send(200, {});
+                }
+            });
+        });
     });
 };
 
