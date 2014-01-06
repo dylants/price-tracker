@@ -53,11 +53,17 @@ module.exports = function(app) {
                         // earlier in the array than those without, so in the end
                         // those without a subcategory in a category with subcategories
                         // appear at the end of the array.
+                        // 
+                        // Also sort the subcategories alphabetically
                         trackedItemsUI[category].trackedItems.sort(function(tiA, tiB) {
                             if (tiA.subcategory && !tiB.subcategory) {
                                 return -1;
                             } else if (!tiA.subcategory && tiB.subcategory) {
                                 return 1;
+                            } else if (tiA.subcategory.charAt(0) > tiB.subcategory.charAt(0)) {
+                                return 1;
+                            } else if (tiA.subcategory.charAt(0) < tiB.subcategory.charAt(0)) {
+                                return -1;
                             } else {
                                 return 0;
                             }
