@@ -9,7 +9,7 @@ module.exports = function(app) {
 
         app.get("/tracked-items-ui", function(req, res) {
             TrackedItem.find().populate("prices").exec(function(err, trackedItems) {
-                var trackedItemsUI, i, trackedItem, category, subcategory, categories;
+                var trackedItemsUI, i, trackedItemUI, trackedItem, category, subcategory;
 
                 if (err) {
                     console.error(err);
@@ -17,36 +17,51 @@ module.exports = function(app) {
                     return;
                 }
 
-                trackedItemsUI = {};
+                trackedItemsUI = [];
 
                 for (i = 0; i < trackedItems.length; i++) {
                     trackedItem = trackedItems[i];
                     category = trackedItem.category;
                     subcategory = trackedItem.subcategory;
 
+                    // find the matching tracked item UI
+                    trackedItemUI = findTrackedItemUIByCategory(category, trackedItemsUI);
+
                     // setup this category if it doesn't yet exist
-                    if (!trackedItemsUI[category]) {
-                        trackedItemsUI[category] = {};
-                        trackedItemsUI[category].trackedItems = [];
-                        trackedItemsUI[category].hasSubcategories = false;
+                    if (!trackedItemUI) {
+                        trackedItemUI = {};
+                        trackedItemUI.category = category;
+                        trackedItemUI.trackedItems = [];
+                        trackedItemUI.hasSubcategories = false;
+                        trackedItemsUI.push(trackedItemUI);
                     }
 
                     // note if this category has subcategories
                     if (subcategory) {
-                        trackedItemsUI[category].hasSubcategories = true;
+                        trackedItemUI.hasSubcategories = true;
                     }
 
                     // add the tracked item UI
-                    trackedItemsUI[category].trackedItems.push(
+                    trackedItemUI.trackedItems.push(
                         generateTrackedItemUI(trackedItem));
                 }
 
+                // sort the tracked items UI alphabetically by category
+                trackedItemsUI.sort(function(tiUIA, tiUIB) {
+                    if (tiUIA.category > tiUIB.category) {
+                        return 1;
+                    } else if (tiUIA.category < tiUIB.category) {
+                        return -1;
+                    } else {
+                        return 0;
+                    }
+                });
+
                 // sort the tracked items that are within subcategories
-                categories = _.keys(trackedItemsUI);
-                categories.forEach(function(category) {
+                trackedItemsUI.forEach(function(trackedItemUI) {
                     var hasSubcategories;
 
-                    hasSubcategories = trackedItemsUI[category].hasSubcategories;
+                    hasSubcategories = trackedItemUI.hasSubcategories;
                     // only do this sorting if subcategories exist
                     if (hasSubcategories) {
                         // sort so the tracked items with a subcategory appear
@@ -55,14 +70,14 @@ module.exports = function(app) {
                         // appear at the end of the array.
                         // 
                         // Also sort the subcategories alphabetically
-                        trackedItemsUI[category].trackedItems.sort(function(tiA, tiB) {
+                        trackedItemUI.trackedItems.sort(function(tiA, tiB) {
                             if (tiA.subcategory && !tiB.subcategory) {
                                 return -1;
                             } else if (!tiA.subcategory && tiB.subcategory) {
                                 return 1;
-                            } else if (tiA.subcategory.charAt(0) > tiB.subcategory.charAt(0)) {
+                            } else if (tiA.subcategory > tiB.subcategory) {
                                 return 1;
-                            } else if (tiA.subcategory.charAt(0) < tiB.subcategory.charAt(0)) {
+                            } else if (tiA.subcategory < tiB.subcategory) {
                                 return -1;
                             } else {
                                 return 0;
@@ -222,6 +237,18 @@ module.exports = function(app) {
         });
     });
 };
+
+function findTrackedItemUIByCategory(category, trackedItemsUI) {
+    var i;
+
+    for (i=0; i<trackedItemsUI.length; i++) {
+        if (trackedItemsUI[i].category === category) {
+            return trackedItemsUI[i];
+        }
+    }
+
+    return null;
+}
 
 function generateTrackedItemUI(trackedItem) {
     var trackedItemUI, i;

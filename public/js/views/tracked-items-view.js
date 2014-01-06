@@ -24,7 +24,7 @@ define([
         },
 
         initialize: function() {
-            this.model.on( "sync", this.renderTrackedItems, this );
+            this.collection.on( "sync", this.renderTrackedItems, this );
         },
 
         close: function() {
@@ -36,9 +36,9 @@ define([
         render: function() {
             this.$el.html(this.template());
 
-            // fetch on the model which will trigger the sync, and
+            // fetch on the collection which will trigger the sync, and
             // call the renderTrackedItems function
-            this.model.fetch();
+            this.collection.fetch();
 
             return this;
         },
@@ -50,15 +50,17 @@ define([
             // clear the existing tracked items
             trackedItemsSelector.empty();
 
-            trackedItemsUI = this.model.toJSON();
+            trackedItemsUI = this.collection.toJSON();
             categories = _.keys(trackedItemsUI);
 
             that = this;
-            categories.forEach(function(category) {
-                var hasSubcategories, categoryHtml, categorySelector,
+            this.collection.each(function(model) {
+                var category, hasSubcategories, categoryHtml, categorySelector,
                     trackedItemsPerCategory;
 
-                hasSubcategories = trackedItemsUI[category].hasSubcategories;
+                model = model.toJSON();
+                category = model.category;
+                hasSubcategories = model.hasSubcategories;
                 categoryHtml = category.toLowerCase().replace(/\s*/g, "");
                 // render the category
                 trackedItemsSelector.append(that.templateCategory({
@@ -67,7 +69,7 @@ define([
                 }));
                 categorySelector = $("#tracked-items-" + categoryHtml);
 
-                trackedItemsPerCategory = trackedItemsUI[category].trackedItems;
+                trackedItemsPerCategory = model.trackedItems;
                 trackedItemsPerCategory.forEach(function(trackedItem) {
                     var trackedItemModel, trackedItemView, subcategory,
                         subcategoryHtml, subcategorySelector;

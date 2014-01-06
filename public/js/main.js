@@ -7,6 +7,7 @@ require.config({
         "text": "lib/text",
         "moment": "lib/moment.min",
         "accounting": "lib/accounting.min",
+        "tracked-items-ui-collection": "models/tracked-items-ui-collection",
         "tracked-items-ui-model": "models/tracked-items-ui-model",
         "add-tracked-item-view": "views/add-tracked-item-view",
         "tracked-item-details-view": "views/tracked-item-details-view",
