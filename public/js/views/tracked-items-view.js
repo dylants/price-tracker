@@ -61,7 +61,10 @@ define([
                 model = model.toJSON();
                 category = model.category;
                 hasSubcategories = model.hasSubcategories;
+                // remove the spaces for the category HTML
                 categoryHtml = category.toLowerCase().replace(/\s*/g, "");
+                // also remove all special characters
+                categoryHtml = categoryHtml.replace(/[^\w\s]/gi, "");
                 // render the category
                 trackedItemsSelector.append(that.templateCategory({
                     category: category,
@@ -91,6 +94,7 @@ define([
                         // attempt to find the subcategory on the page to
                         // see if it's already been added
                         subcategoryHtml = subcategory.toLowerCase().replace(/\s*/g, "");
+                        subcategoryHtml = subcategoryHtml.replace(/[^\w\s]/gi, "");
                         subcategorySelector = $("#tracked-items-" + categoryHtml +
                             "-" + subcategoryHtml);
                         if (subcategorySelector.length > 0) {
