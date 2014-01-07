@@ -20,7 +20,7 @@ module.exports = function(app) {
                 trackedItemsUI = [];
 
                 for (i = 0; i < trackedItems.length; i++) {
-                    trackedItem = trackedItems[i];
+                    trackedItem = trackedItems[i].toJSON();
                     category = trackedItem.category;
                     subcategory = trackedItem.subcategory;
 
