@@ -3,6 +3,10 @@ module.exports = function(app) {
         res.redirect("/price-tracker");
     });
     app.get("/price-tracker*", function(req, res) {
-        res.render("price-tracker");
+        if (app.get("env") == "production") {
+            res.render("price-tracker-production.html");
+        } else {
+            res.render("price-tracker-development.html");
+        }
     });
 };

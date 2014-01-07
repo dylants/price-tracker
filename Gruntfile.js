@@ -1,4 +1,6 @@
+/* global module:true */
 module.exports = function(grunt) {
+    "use strict";
 
     grunt.initConfig({
         pkg: grunt.file.readJSON("package.json"),
@@ -13,10 +15,38 @@ module.exports = function(grunt) {
                     "public/js/lib/**"
                 ]
             }
+        },
+        requirejs: {
+            compile: {
+                options: {
+                    name: "main",
+                    baseUrl: "public/js",
+                    include: "lib/almond",
+                    mainConfigFile: "public/js/main.js",
+                    out: "public/js/price-tracker-min.js"
+                }
+            }
+        },
+        cssmin: {
+            add_banner: {
+                options: {
+                    banner: "/* price-tracker minified CSS */"
+                },
+                files: {
+                    "public/css/style.min.css": ["public/css/**/*.css"]
+                }
+            }
         }
     });
 
     grunt.loadNpmTasks("grunt-contrib-jshint");
+    grunt.loadNpmTasks("grunt-contrib-requirejs");
+    grunt.loadNpmTasks('grunt-contrib-cssmin');
 
-    grunt.registerTask("default", "jshint");
+    grunt.registerTask("default", ["clean", "jshint", "requirejs", "cssmin"]);
+
+    grunt.registerTask("clean", function() {
+        grunt.file.delete("public/js/price-tracker-min.js");
+        grunt.file.delete("public/css/style.min.css");
+    });
 };
