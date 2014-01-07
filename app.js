@@ -5,11 +5,51 @@ var express = require("express"),
     app = express(),
     mongoose = require("mongoose");
 
-// configure the app (all environments)
-app.configure(function() {
+var mongoUrl;
+
+// configuration for development environment
+app.configure("development", function() {
+    console.log("in development environment");
+
     // read the port from the environment, else set to 3000
     app.set("port", process.env.PORT || 3000);
 
+    // set the mongo URL to localhost, price-tracker database
+    mongoUrl = "mongodb://localhost/price-tracker";
+
+    // configure express' error handler for development
+    app.use(express.errorHandler());
+});
+
+// configuration for production environment (NODE_ENV=production)
+app.configure("production", function() {
+    var vcapServices, mongoConfiguration;
+
+    console.log("in production environment");
+
+    // read the port from VCAP, else set to 3000
+    app.set("port", process.env.VCAP_APP_PORT || 3000);
+
+    // load the mongo configuration from VCAP
+    vcapServices = JSON.parse(process.env.VCAP_SERVICES);
+    mongoConfiguration = vcapServices["mongodb-1.8"][0]["credentials"];
+
+    mongoUrl = "mongodb://";
+    if (mongoConfiguration.username && mongoConfiguration.password) {
+        mongoUrl = mongoUrl + mongoConfiguration.username + ":" +
+            mongoConfiguration.password + "@";
+    }
+    mongoUrl = mongoUrl + mongoConfiguration.hostname + ":" + 
+        mongoConfiguration.port + "/" + mongoConfiguration.db;
+
+    // configure a generic 500 error message
+    app.use(function(err, req, res, next) {
+        res.send(500, "An error has occurred");
+    });
+});
+
+// configure the app (all environments)
+app.configure(function() {
     // configure view rendering (underscore)
     app.engine("html", cons.underscore);
     app.set("view engine", "html");
@@ -26,7 +66,7 @@ app.configure(function() {
      * This connection will be used by the mongoose API throughout
      * our code base.
      */
-    mongoose.connect("mongodb://localhost/price-tracker", function(error) {
+    mongoose.connect(mongoUrl, function(error) {
         // handle the error case
         if (error) {
             console.error("Failed to connect to the Mongo server!!");
@@ -50,21 +90,6 @@ app.configure(function() {
 
     // static assets processed after routes, mapped to /public
     app.use("/public", express.static(__dirname + "/public"));
-});
-
-// configuration for development environment
-app.configure("development", function() {
-    console.log("in development environment");
-    app.use(express.errorHandler());
-});
-
-// configuration for production environment (NODE_ENV=production)
-app.configure("production", function() {
-    console.log("in production environment");
-    // configure a generic 500 error message
-    app.use(function(err, req, res, next) {
-        res.send(500, "An error has occurred");
-    });
 });
 
 // start the app
