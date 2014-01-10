@@ -37,7 +37,7 @@ TrackedItemSchema.pre("remove", function(next) {
             prices[i].remove();
         }
         next();
-    })
+    });
 });
 
 mongoose.model("TrackedItem", TrackedItemSchema);
