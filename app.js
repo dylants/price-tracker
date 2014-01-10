@@ -38,7 +38,8 @@ app.configure(function() {
 
     // use express' cookie session
     app.use(express.cookieSession({
-        secret: "super secret",
+        key: "ptsc",
+        secret: "ptss",
         cookie: {
             maxAge: SESSION_COOKIE_LIFETIME
         }
