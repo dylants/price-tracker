@@ -21,4 +21,23 @@ var TrackedItemSchema = new Schema({
     }]
 });
 
+TrackedItemSchema.pre("remove", function(next) {
+    var Price = mongoose.model("Price");
+    // don't forget to remove the connected prices!
+    Price.find({
+        trackedItem: this
+    }, function(err, prices) {
+        var i;
+
+        if (err) {
+            next(err);
+        }
+
+        for (i=0; i<prices.length; i++) {
+            prices[i].remove();
+        }
+        next();
+    })
+});
+
 mongoose.model("TrackedItem", TrackedItemSchema);

@@ -97,6 +97,10 @@ module.exports = function(app) {
                     res.send(500);
                     return;
                 }
+                if (trackedItem === null) {
+                    res.send(404);
+                    return;
+                }
 
                 res.send(generateTrackedItemUI(trackedItem));
             });
@@ -132,6 +136,7 @@ module.exports = function(app) {
 
                     // create a price
                     priceModel = new Price({
+                        trackedItem: trackedItem,
                         price: price,
                         uri: uri,
                         dateEstablished: new Date()
@@ -179,6 +184,10 @@ module.exports = function(app) {
                     res.send(500);
                     return;
                 }
+                if (trackedItem === null) {
+                    res.send(404);
+                    return;
+                }
 
                 // currently we support updating the name, category, and
                 // subcategory only
@@ -220,18 +229,30 @@ module.exports = function(app) {
         });
 
         app.delete("/tracked-items-ui/:id", function(req, res) {
-            TrackedItem.findByIdAndRemove(req.params.id, function(err, trackedItem) {
+            // we have a middleware hooked up to perform additional operations
+            // when we remove a tracked item. Mongoose only supports calling
+            // middleware when a document invokes the action. So because of this,
+            // we must first find the object, then call remove on the Document,
+            // not a one-stop using the Model.
+            TrackedItem.findById(req.params.id, function(err, trackedItem) {
                 if (err) {
                     console.error(err);
                     res.send(500);
                     return;
                 }
 
-                // with no errors, respond with success if the trackedItem existed
+                // if the tracked item did not exist, respond with 404
                 if (trackedItem === null) {
                     res.send(404);
                 } else {
-                    res.send(200, {});
+                    trackedItem.remove(function(err) {
+                        if (err) {
+                            console.error(err);
+                            res.send(500);
+                            return;
+                        }
+                        res.send(200, {});
+                    });
                 }
             });
         });
@@ -254,7 +275,7 @@ function generateTrackedItemUI(trackedItem) {
     var trackedItemUI, i;
 
     trackedItemUI = {};
-    trackedItemUI.id = trackedItem.id;
+    trackedItemUI.id = trackedItem._id;
     trackedItemUI.name = trackedItem.name;
     trackedItemUI.category = trackedItem.category;
     trackedItemUI.subcategory = trackedItem.subcategory ? trackedItem.subcategory : "";
