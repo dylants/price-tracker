@@ -2,21 +2,22 @@
 define([
     "backbone",
     "jquery",
+    "session-model",
+    "session-view",
     "tracked-items-ui-collection",
     "tracked-items-ui-model",
     "tracked-items-view",
     "add-tracked-item-view",
     "tracked-item-details-view"
-], function(Backbone, $, TrackedItemsUICollection, TrackedItemsUIModel, TrackedItemsView,
-    AddTrackedItemView, TrackedItemDetailsView) {
+], function(Backbone, $, SessionModel, SessionView, TrackedItemsUICollection,
+    TrackedItemsUIModel, TrackedItemsView, AddTrackedItemView, TrackedItemDetailsView) {
     "use strict";
 
-    var trackedItemsUICollection, trackedItemsUIModel, trackedItemsView,
-        addTrackedItemView, trackedItemDetailsView;
 
     var Router = Backbone.Router.extend({
         routes: {
             "": "defaultRoute",
+            "login": "login",
             "tracked-items": "trackedItems",
             "add-tracked-item": "addTrackedItem",
             "tracked-item-details/:id": "trackedItemDetails",
@@ -25,6 +26,8 @@ define([
 
         initialize: function() {
             this.on("route", this.routeCalled, this);
+
+            this.currentView = null;
         },
 
         routeCalled: function(routeCalled, args) {
@@ -38,42 +41,62 @@ define([
             });
         },
 
+        login: function() {
+            var sessionModel;
+
+            if (this.currentView) {
+                this.currentView.close();
+            }
+
+            sessionModel = new SessionModel();
+            this.currentView = new SessionView({
+                model: sessionModel
+            });
+            this.currentView.render();
+        },
+
         trackedItems: function() {
-            if (trackedItemsView) {
-                trackedItemsView.close();
+            var trackedItemsUICollection;
+
+            if (this.currentView) {
+                this.currentView.close();
             }
 
             trackedItemsUICollection = new TrackedItemsUICollection();
-            trackedItemsView = new TrackedItemsView({
+            this.currentView = new TrackedItemsView({
                 collection: trackedItemsUICollection
             });
-            trackedItemsView.render();
+            this.currentView.render();
         },
 
         addTrackedItem: function() {
-            if (addTrackedItemView) {
-                addTrackedItemView.close();
+            var trackedItemsUIModel;
+
+            if (this.currentView) {
+                this.currentView.close();
             }
 
             trackedItemsUIModel = new TrackedItemsUIModel();
-            addTrackedItemView = new AddTrackedItemView({
+            this.currentView = new AddTrackedItemView({
                 model: trackedItemsUIModel
             });
-            addTrackedItemView.render();
+            this.currentView.render();
         },
 
         trackedItemDetails: function(id) {
-            if (trackedItemDetailsView) {
-                trackedItemDetailsView.close();
+            var trackedItemsUIModel;
+
+            if (this.currentView) {
+                this.currentView.close();
             }
 
             trackedItemsUIModel = new TrackedItemsUIModel({
                 id: id
             });
-            trackedItemDetailsView = new TrackedItemDetailsView({
+            this.currentView = new TrackedItemDetailsView({
                 model: trackedItemsUIModel
             });
-            trackedItemDetailsView.render();
+            this.currentView.render();
         },
 
         badRoute: function(invalidRoute) {

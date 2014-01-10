@@ -59,13 +59,16 @@ h3 {
     color: rgb(200, 200, 200);
     text-transform: uppercase;
 }
-.add-tracked-item-buttons, .tracked-item-details-buttons {
+.add-tracked-item-buttons, .tracked-item-details-buttons, .login-button-row {
     text-align: center;
 }
-.add-tracked-item-button, .tracked-item-details-button {
+.add-tracked-item-button, .tracked-item-details-button, .login-button {
     background-color: rgb(200, 200, 200);
     margin: 1em;
     width: 15em;
+}
+.login-input {
+    margin-top: 1em;
 }
 .waiting {
     text-align: center;

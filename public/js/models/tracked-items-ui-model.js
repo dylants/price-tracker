@@ -1,10 +1,10 @@
 /* global define:true */
 define([
-    "backbone"
-], function(Backbone) {
+    "authenticated-model"
+], function(AuthenticatedModel) {
     "use strict";
 
-    return Backbone.Model.extend({
+    return AuthenticatedModel.extend({
         urlRoot: "/api/tracked-items-ui"
     });
 });

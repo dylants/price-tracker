@@ -1,10 +1,10 @@
 /* global define:true */
 define([
-    "backbone"
-], function(Backbone) {
+    "authenticated-collection"
+], function(AuthenticatedCollection) {
     "use strict";
 
-    return Backbone.Collection.extend({
+    return AuthenticatedCollection.extend({
         url: "/api/tracked-items-ui"
     });
 });

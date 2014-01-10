@@ -3,7 +3,22 @@ var express = require("express"),
     fs = require("fs"),
     cons = require("consolidate"),
     app = express(),
+    passport = require("passport"),
     mongoose = require("mongoose");
+
+// 365 days for session cookie lifetime
+var SESSION_COOKIE_LIFETIME = 1000 * 60 * 60 * 24 * 365;
+
+// Verifies the user is authenticated, else returns unauthorized
+var requireAuthentication = function(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
+    }
+    // send the error as JSON to be nice to clients
+    res.send(401, {
+        error: "Unauthorized"
+    });
+};
 
 // configure the app (all environments)
 app.configure(function() {
@@ -20,6 +35,14 @@ app.configure(function() {
 
     // use express' body parser to access body elements later
     app.use(express.bodyParser());
+
+    // use express' cookie session
+    app.use(express.cookieSession({
+        secret: "super secret",
+        cookie: {
+            maxAge: SESSION_COOKIE_LIFETIME
+        }
+    }));
 
     /*
      * Connect to mongoDB at localhost using the database "price-tracker".
@@ -39,6 +62,14 @@ app.configure(function() {
     fs.readdirSync("models").forEach(function(modelName) {
         require("./models/" + modelName);
     });
+
+    // include passport authentication (after mongo since it requires it)
+    require("./passport-configuration");
+    app.use(passport.initialize());
+    app.use(passport.session());
+
+    // configure that all routes under /api require authentication
+    app.all("/api/*", requireAuthentication);
 
     // pull in all the controllers (these contain routes)
     fs.readdirSync("controllers").forEach(function(controllerName) {
