@@ -82,6 +82,9 @@ app.configure(function() {
 
     // static assets processed after routes, mapped to /public
     app.use("/public", express.static(__dirname + "/public"));
+
+    // load cron jobs
+    require("./cron-jobs");
 });
 
 // configuration for development environment

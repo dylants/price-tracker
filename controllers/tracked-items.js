@@ -18,6 +18,7 @@ module.exports = function(app) {
         });
 
         app.get("/tracked-items/update", function(req, res) {
+            console.log("Manual trigger of price update");
             // issue the request in the background, returning immediately
             priceUpdater.updateTrackedItems();
             res.send("update requested");
