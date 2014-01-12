@@ -43,6 +43,12 @@ h3 {
 .old-price-inner {
     color: black;
 }
+.recent-price-increase {
+    background-color: rgb(210, 175, 175);
+}
+.recent-price-decrease {
+    background-color: rgb(165, 200, 165);
+}
 #add-tracked-item {
     text-align: center;
 }
