@@ -41,7 +41,7 @@ define([
                 yesterday = moment(new Date());
                 yesterday.subtract("days", 1);
                 if (currentPriceDate.isAfter(yesterday)) {
-                    if (model.currentPrice < model.pastPrices[0]) {
+                    if (model.currentPrice < model.pastPrices[0].price) {
                         $(this.el).find(".tracked-item").addClass("recent-price-decrease");
                     } else {
                         $(this.el).find(".tracked-item").addClass("recent-price-increase");
