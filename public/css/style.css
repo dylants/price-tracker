@@ -44,10 +44,10 @@ h3 {
     color: black;
 }
 .recent-price-increase {
-    background-color: rgb(210, 175, 175);
+    background-color: rgb(220, 190, 190);
 }
 .recent-price-decrease {
-    background-color: rgb(165, 200, 165);
+    background-color: rgb(200, 225, 200);
 }
 #add-tracked-item {
     text-align: center;
