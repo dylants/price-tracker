@@ -14,12 +14,14 @@
         "consolidate": "~0.10.0",
         "underscore": "~1.5.2",
         "express-namespace": "~0.1.1",
-        "scraper": "~0.0.9",
         "async": "~0.2.9",
         "mongoose": "~3.8.3",
         "passport": "~0.1.17",
         "passport-local": "~0.1.6",
-        "bcrypt": "~0.7.7"
+        "bcrypt": "~0.7.7",
+        "request": "~2.31.0",
+        "cheerio": "~0.13.1",
+        "moment": "~2.5.0"
     },
     "devDependencies": {
         "grunt": "~0.4.1",
