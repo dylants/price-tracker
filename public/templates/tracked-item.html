@@ -32,13 +32,18 @@
                     <span class="current-price"><%- accounting.formatMoney(currentPrice) %></span>
                 <% } %>
                 <% var i, pastPrice; %>
-                <% for (i=0; i<pastPrices.length; i++) { %>
+                <% for (i = 0; i < pastPrices.length && i < 4; i++) { %>
                     <% pastPrice = pastPrices[i]; %>
                     <span class="old-price-outer">
                         <span class="old-price-inner">
                             <%- accounting.formatMoney(pastPrice.price) %>
                         </span>
                     </span>
+                <% } %>
+                <% if (pastPrices.length > 4) { %>
+                <span class="old-price-inner">
+                    ....
+                </span>
                 <% } %>
             </div>
         <% } %>
