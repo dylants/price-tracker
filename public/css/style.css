@@ -1,6 +1,8 @@
 body {
     background-color: rgb(80, 80, 80);
     background-image: url("/public/img/wild_oliva.png");
+    /* to allow for the footer */
+    margin-bottom: 2em;
 }
 h1, h2 {
     text-align: center;
@@ -81,6 +83,19 @@ h3 {
     color: rgb(200, 200, 200);
     font-size: x-large;
     margin-bottom: 1em;
+}
+footer {
+    background-color: rgb(55, 55, 55);
+    height: 2em;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    color: rgb(120, 120, 120);
+}
+#status-information {
+    position: absolute;
+    right: 1em;
+    bottom: 0.35em;
 }
 /* small */
  @media (max-width: 992px) {

@@ -8,11 +8,13 @@ define([
     "tracked-items-ui-model",
     "tracked-items-view",
     "add-tracked-item-view",
-    "tracked-item-details-view"
+    "tracked-item-details-view",
+    "footer-model",
+    "footer-view"
 ], function(Backbone, $, SessionModel, SessionView, TrackedItemsUICollection,
-    TrackedItemsUIModel, TrackedItemsView, AddTrackedItemView, TrackedItemDetailsView) {
+    TrackedItemsUIModel, TrackedItemsView, AddTrackedItemView, TrackedItemDetailsView,
+    FooterModel, FooterView) {
     "use strict";
-
 
     var Router = Backbone.Router.extend({
         routes: {
@@ -28,6 +30,7 @@ define([
             this.on("route", this.routeCalled, this);
 
             this.currentView = null;
+            this.footerView = null;
         },
 
         routeCalled: function(routeCalled, args) {
@@ -67,6 +70,9 @@ define([
                 collection: trackedItemsUICollection
             });
             this.currentView.render();
+
+            // also render the footer
+            this.renderFooter();
         },
 
         addTrackedItem: function() {
@@ -97,6 +103,20 @@ define([
                 model: trackedItemsUIModel
             });
             this.currentView.render();
+        },
+
+        renderFooter: function() {
+            var footerModel;
+
+            if (this.footerView) {
+                this.footerView.close();
+            }
+
+            footerModel = new FooterModel();
+            this.footerView = new FooterView({
+                model: footerModel
+            });
+            this.footerView.render();
         },
 
         badRoute: function(invalidRoute) {
