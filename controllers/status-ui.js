@@ -14,10 +14,18 @@ module.exports = function(app) {
                 }
 
                 statusUI = status.toJSON();
+
+                // compute the minutes
                 statusUI.lastUpdateDurationMinutes =
                     Math.floor(statusUI.lastUpdateDurationInSeconds / 60);
+
+                // compute the seconds
                 statusUI.lastUpdateDurationSeconds =
                     statusUI.lastUpdateDurationInSeconds % 60;
+                // don't let the seconds be a single digit
+                if (statusUI.lastUpdateDurationSeconds < 10) {
+                    statusUI.lastUpdateDurationSeconds = "0" + statusUI.lastUpdateDurationSeconds;
+                }
 
                 res.send(statusUI);
             });
