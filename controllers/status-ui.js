@@ -1,11 +1,12 @@
-var mongoose = require("mongoose"),
+var Duration = require("duration"),
+    mongoose = require("mongoose"),
     Status = mongoose.model("Status");
 
 module.exports = function(app) {
     app.namespace("/api", function() {
         app.get("/status-ui", function(req, res) {
             Status.findOne(function(err, status) {
-                var statusUI;
+                var statusUI, duration;
 
                 if (err) {
                     console.error(err);
@@ -13,19 +14,11 @@ module.exports = function(app) {
                     return;
                 }
 
-                statusUI = status.toJSON();
-
-                // compute the minutes
-                statusUI.lastUpdateDurationMinutes =
-                    Math.floor(statusUI.lastUpdateDurationInSeconds / 60);
-
-                // compute the seconds
-                statusUI.lastUpdateDurationSeconds =
-                    statusUI.lastUpdateDurationInSeconds % 60;
-                // don't let the seconds be a single digit
-                if (statusUI.lastUpdateDurationSeconds < 10) {
-                    statusUI.lastUpdateDurationSeconds = "0" + statusUI.lastUpdateDurationSeconds;
-                }
+                status = status.toJSON();
+                statusUI = {};
+                statusUI.lastUpdate = status.lastUpdateStart;
+                duration = new Duration(status.lastUpdateStart, status.lastUpdateEnd);
+                statusUI.lastUpdateDuration = duration.toString(1, 1);
 
                 res.send(statusUI);
             });

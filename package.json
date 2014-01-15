@@ -22,7 +22,8 @@
         "request": "~2.31.0",
         "cheerio": "~0.13.1",
         "moment": "~2.5.0",
-        "cron": "~1.0.1"
+        "cron": "~1.0.1",
+        "duration": "~0.1.4"
     },
     "devDependencies": {
         "grunt": "~0.4.1",

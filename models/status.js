@@ -2,11 +2,11 @@ var mongoose = require("mongoose"),
     Schema = mongoose.Schema;
 
 var StatusSchema = new Schema({
-    lastUpdate: {
+    lastUpdateStart: {
         type: Date
     },
-    lastUpdateDurationInSeconds: {
-        type: Number
+    lastUpdateEnd: {
+        type: Date
     }
 });
 
