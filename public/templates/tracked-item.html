@@ -20,16 +20,16 @@
                 <%- name %>
             <% } %>
         </div>
-        <% if (typeof currentPrice != "undefined") { %>
+        <% if ((typeof currentPrice != "undefined") && (typeof currentPrice.price != "undefined")) { %>
             <div class="tracked-item-price">
                 <% if (pastPrices[0]) { %>
-                    <% if (currentPrice < pastPrices[0].price) { %>
-                        <span class="current-price lower-price"><%- accounting.formatMoney(currentPrice) %></span>
+                    <% if (currentPrice.price < pastPrices[0].price) { %>
+                        <span class="current-price lower-price"><%- accounting.formatMoney(currentPrice.price) %></span>
                     <% } else { %>
-                        <span class="current-price higher-price"><%- accounting.formatMoney(currentPrice) %></span>
+                        <span class="current-price higher-price"><%- accounting.formatMoney(currentPrice.price) %></span>
                     <% } %>
                 <% } else { %>
-                    <span class="current-price"><%- accounting.formatMoney(currentPrice) %></span>
+                    <span class="current-price"><%- accounting.formatMoney(currentPrice.price) %></span>
                 <% } %>
                 <% var i, pastPrice; %>
                 <% for (i = 0; i < pastPrices.length && i < 4; i++) { %>

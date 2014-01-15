@@ -37,11 +37,11 @@ define([
             // if the item's current price was recently found, note that in the UI
             // (only do this if there are past prices)
             if (model.pastPrices[0]) {
-                currentPriceDate = moment(model.currentPriceDate);
+                currentPriceDate = moment(model.currentPrice.date);
                 yesterday = moment(new Date());
                 yesterday.subtract("days", 1);
                 if (currentPriceDate.isAfter(yesterday)) {
-                    if (model.currentPrice < model.pastPrices[0].price) {
+                    if (model.currentPrice.price < model.pastPrices[0].price) {
                         $(this.el).find(".tracked-item").addClass("recent-price-decrease");
                     } else {
                         $(this.el).find(".tracked-item").addClass("recent-price-increase");
