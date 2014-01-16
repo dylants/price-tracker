@@ -1,51 +1,53 @@
-<div class="row">
-    <div class="tracked-item col-md-offset-3 col-md-6">
-        <% if (pastPrices.length === 0) { %>
-            <% var nameLength = 30; %>
-        <div class="tracked-item-name visible-xs">
-        <% } else { %>
-            <% var nameLength = 40; %>
-        <div class="tracked-item-name-own-row visible-xs">
-        <% } %>
-            <% if (name.length > nameLength) { %>
-                <%- name.substring(0, nameLength).trim() + "..." %>
+<a href="tracked-item-details/<%- id %>">
+    <div class="row">
+        <div class="tracked-item col-md-offset-3 col-md-6">
+            <% if (pastPrices.length === 0) { %>
+                <% var nameLength = 30; %>
+            <div class="tracked-item-name visible-xs">
             <% } else { %>
-                <%- name %>
+                <% var nameLength = 40; %>
+            <div class="tracked-item-name-own-row visible-xs">
             <% } %>
-        </div>
-        <div class="tracked-item-name hidden-xs">
-            <% if (name.length > 50) { %>
-                <%- name.substring(0, 50).trim() + "..." %>
-            <% } else { %>
-                <%- name %>
-            <% } %>
-        </div>
-        <% if ((typeof currentPrice != "undefined") && (typeof currentPrice.price != "undefined")) { %>
-            <div class="tracked-item-price">
-                <% if (pastPrices[0]) { %>
-                    <% if (currentPrice.price < pastPrices[0].price) { %>
-                        <span class="current-price lower-price"><%- accounting.formatMoney(currentPrice.price) %></span>
-                    <% } else { %>
-                        <span class="current-price higher-price"><%- accounting.formatMoney(currentPrice.price) %></span>
-                    <% } %>
+                <% if (name.length > nameLength) { %>
+                    <%- name.substring(0, nameLength).trim() + "..." %>
                 <% } else { %>
-                    <span class="current-price"><%- accounting.formatMoney(currentPrice.price) %></span>
-                <% } %>
-                <% var i, pastPrice; %>
-                <% for (i = 0; i < pastPrices.length && i < 4; i++) { %>
-                    <% pastPrice = pastPrices[i]; %>
-                    <span class="old-price-outer">
-                        <span class="old-price-inner">
-                            <%- accounting.formatMoney(pastPrice.price) %>
-                        </span>
-                    </span>
-                <% } %>
-                <% if (pastPrices.length > 4) { %>
-                <span class="old-price-inner">
-                    ....
-                </span>
+                    <%- name %>
                 <% } %>
             </div>
-        <% } %>
+            <div class="tracked-item-name hidden-xs">
+                <% if (name.length > 50) { %>
+                    <%- name.substring(0, 50).trim() + "..." %>
+                <% } else { %>
+                    <%- name %>
+                <% } %>
+            </div>
+            <% if ((typeof currentPrice != "undefined") && (typeof currentPrice.price != "undefined")) { %>
+                <div class="tracked-item-price">
+                    <% if (pastPrices[0]) { %>
+                        <% if (currentPrice.price < pastPrices[0].price) { %>
+                            <span class="current-price lower-price"><%- accounting.formatMoney(currentPrice.price) %></span>
+                        <% } else { %>
+                            <span class="current-price higher-price"><%- accounting.formatMoney(currentPrice.price) %></span>
+                        <% } %>
+                    <% } else { %>
+                        <span class="current-price"><%- accounting.formatMoney(currentPrice.price) %></span>
+                    <% } %>
+                    <% var i, pastPrice; %>
+                    <% for (i = 0; i < pastPrices.length && i < 4; i++) { %>
+                        <% pastPrice = pastPrices[i]; %>
+                        <span class="old-price-outer">
+                            <span class="old-price-inner">
+                                <%- accounting.formatMoney(pastPrice.price) %>
+                            </span>
+                        </span>
+                    <% } %>
+                    <% if (pastPrices.length > 4) { %>
+                    <span class="old-price-inner">
+                        ....
+                    </span>
+                    <% } %>
+                </div>
+            <% } %>
+        </div>
     </div>
-</div>
+</a>

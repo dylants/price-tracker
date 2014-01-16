@@ -16,12 +16,51 @@
             <input type="text" class="form-control" id="subcategory" placeholder="Subcategory" value="<%- subcategory %>">
         </div>
     </div>
-    <div class="item-row form-group">
-        <label for="current-price" class="tracked-item-details-label col-md-2 col-md-offset-3 control-label">Current Price</label>
-        <div class="col-md-2">
-            <input type="text" class="form-control" id="current-price" value="<%- currentPrice.price %>" disabled>
-        </div>
+
+    <h2>Price History</h2>
+
+    <div class="form-group">
+    <table class="table-bordered table-striped col-md-offset-4 col-md-4 col-sm-12 col-xs-12">
+        <thead>
+        <tr class="item-price">
+            <td class="item-price-heading">Price</td>
+            <td class="item-price-heading">Duration</td>
+        </tr>
+        </thead>
+        <tr class="item-price">
+            <% if (pastPrices[0]) { %>
+                <% if (currentPrice.price < pastPrices[0].price) { %>
+                    <td class="price lower-price"><%- accounting.formatMoney(currentPrice.price) %></td>
+                    <td class="duration lower-price"><%- currentPrice.duration %></td>
+                <% } else { %>
+                    <td class="price higher-price"><%- accounting.formatMoney(currentPrice.price) %></td>
+                    <td class="duration higher-price"><%- currentPrice.duration %></td>
+                <% } %>
+            <% } else { %>
+                <td class="price"><%- accounting.formatMoney(currentPrice.price) %></td>
+                <td class="duration"><%- currentPrice.duration %></td>
+            <% } %>
+        </tr>
+        <% var i, pastPrice; %>
+        <% for (i = 0; i < pastPrices.length && i < 4; i++) { %>
+            <tr class="item-price">
+                <% if (pastPrices[i + 1]) { %>
+                    <% if (pastPrices[i].price < pastPrices[i + 1].price) { %>
+                        <td class="price lower-price"><%- accounting.formatMoney(pastPrices[i].price) %></td>
+                        <td class="duration lower-price"><%- pastPrices[i].duration %></td>
+                    <% } else { %>
+                        <td class="price higher-price"><%- accounting.formatMoney(pastPrices[i].price) %></td>
+                        <td class="duration higher-price"><%- pastPrices[i].duration %></td>
+                    <% } %>
+                <% } else { %>
+                    <td class="price"><%- accounting.formatMoney(pastPrices[i].price) %></td>
+                    <td class="duration"><%- pastPrices[i].duration %></td>
+                <% } %>
+            </tr>
+        <% } %>
+    </table>
     </div>
+
     <div class="item-row form-group">
         <div class="tracked-item-details-buttons">
             <button id="update" class="tracked-item-details-button btn btn-default">Update</button>
