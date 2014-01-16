@@ -289,8 +289,8 @@ function generateTrackedItemUI(trackedItem) {
         // calculate the duration of time this price has existed
         if (trackedItem.prices.length > 1) {
             // there was a previous price
-            duration = new Duration(trackedItem.prices[0].dateEstablished,
-                trackedItem.prices[1].dateEstablished);
+            duration = new Duration(trackedItem.prices[1].dateEstablished,
+                trackedItem.prices[0].dateEstablished);
             if (duration.hour) {
                 trackedItemUI.currentPrice.duration = duration.toString(1, 3);
             } else {
