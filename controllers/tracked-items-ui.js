@@ -58,7 +58,7 @@ module.exports = function(app) {
                     }
                 });
 
-                // sort the tracked items that are within subcategories
+                // sort the tracked items within each tracked items UI
                 trackedItemsUI.forEach(function(trackedItemUI) {
                     var hasSubcategories;
 
@@ -79,6 +79,26 @@ module.exports = function(app) {
                             } else if (tiA.subcategory > tiB.subcategory) {
                                 return 1;
                             } else if (tiA.subcategory < tiB.subcategory) {
+                                return -1;
+                            } else if (tiA.subcategory === tiB.subcategory) {
+                                // sort the items alphabetically
+                                if (tiA.name > tiB.name) {
+                                    return 1;
+                                } else if (tiA.name < tiB.name) {
+                                    return -1;
+                                } else {
+                                    return 0;
+                                }
+                            } else {
+                                return 0;
+                            }
+                        });
+                    } else {
+                        // sort the tracked items alphabetically
+                        trackedItemUI.trackedItems.sort(function(tiA, tiB) {
+                            if (tiA.name > tiB.name) {
+                                return 1;
+                            } else if (tiA.name < tiB.name) {
                                 return -1;
                             } else {
                                 return 0;
