@@ -42,7 +42,7 @@
             <% } %>
         </tr>
         <% var i, pastPrice; %>
-        <% for (i = 0; i < pastPrices.length && i < 4; i++) { %>
+        <% for (i = 0; i < pastPrices.length; i++) { %>
             <tr class="item-price">
                 <% if (pastPrices[i + 1]) { %>
                     <% if (pastPrices[i].price < pastPrices[i + 1].price) { %>
