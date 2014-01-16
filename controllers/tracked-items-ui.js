@@ -287,33 +287,28 @@ function generateTrackedItemUI(trackedItem) {
         trackedItemUI.currentPrice.uri = trackedItem.prices[0].uri;
         trackedItemUI.currentPrice.date = trackedItem.prices[0].dateEstablished;
         // calculate the duration of time this price has existed
-        if (trackedItem.prices.length > 1) {
-            // there was a previous price
-            duration = moment.duration(trackedItem.prices[1].dateEstablished.valueOf() -
-                trackedItem.prices[0].dateEstablished.valueOf()).humanize();
-            if (duration === "a day") {
-                duration = "1 day";
-            }
-            trackedItemUI.currentPrice.duration = duration;
-        } else {
-            // there was no previous price, this is the first
-            trackedItemUI.currentPrice.duration = null;
+        duration = moment.duration(trackedItem.prices[0].dateEstablished.valueOf() -
+            (new Date()).valueOf()).humanize();
+        if (duration === "a day") {
+            duration = "1 day";
         }
+        if (duration === "an hour") {
+            duration = "1 hour";
+        }
+        trackedItemUI.currentPrice.duration = duration;
 
         // what about any past prices?
         trackedItemUI.pastPrices = [];
         if (trackedItem.prices.length > 1) {
             for (i = 1; i < trackedItem.prices.length; i++) {
-                if (trackedItem.prices.length > i + 1) {
-                    // there was a previous, previous price
-                    duration = moment.duration(trackedItem.prices[i + 1].dateEstablished.valueOf() -
-                        trackedItem.prices[i].dateEstablished.valueOf()).humanize();
-                    if (duration === "a day") {
-                        duration = "1 day";
-                    }
-                } else {
-                    // there was no previous, previous price
-                    duration = null;
+                // there was a previous, previous price
+                duration = moment.duration(trackedItem.prices[i].dateEstablished.valueOf() -
+                    trackedItem.prices[i - 1].dateEstablished.valueOf()).humanize();
+                if (duration === "a day") {
+                    duration = "1 day";
+                }
+                if (duration === "an hour") {
+                    duration = "1 hour";
                 }
                 trackedItemUI.pastPrices.push({
                     price: trackedItem.prices[i].price,
