@@ -1,6 +1,6 @@
 var priceUpdater = require("../lib/price-updater"),
     _ = require("underscore"),
-    Duration = require("duration"),
+    moment = require("moment"),
     mongoose = require("mongoose"),
     TrackedItem = mongoose.model("TrackedItem"),
     Price = mongoose.model("Price");
@@ -273,7 +273,7 @@ function findTrackedItemUIByCategory(category, trackedItemsUI) {
 }
 
 function generateTrackedItemUI(trackedItem) {
-    var trackedItemUI, duration, i, durationAttr;
+    var trackedItemUI, duration, i;
 
     trackedItemUI = {};
     trackedItemUI.id = trackedItem._id;
@@ -289,13 +289,12 @@ function generateTrackedItemUI(trackedItem) {
         // calculate the duration of time this price has existed
         if (trackedItem.prices.length > 1) {
             // there was a previous price
-            duration = new Duration(trackedItem.prices[1].dateEstablished,
-                trackedItem.prices[0].dateEstablished);
-            if (duration.hour) {
-                trackedItemUI.currentPrice.duration = duration.toString(1, 3);
-            } else {
-                trackedItemUI.currentPrice.duration = duration.toString(1, 4);
+            duration = moment.duration(trackedItem.prices[1].dateEstablished.valueOf() -
+                trackedItem.prices[0].dateEstablished.valueOf()).humanize();
+            if (duration === "a day") {
+                duration = "1 day";
             }
+            trackedItemUI.currentPrice.duration = duration;
         } else {
             // there was no previous price, this is the first
             trackedItemUI.currentPrice.duration = null;
@@ -307,22 +306,20 @@ function generateTrackedItemUI(trackedItem) {
             for (i = 1; i < trackedItem.prices.length; i++) {
                 if (trackedItem.prices.length > i + 1) {
                     // there was a previous, previous price
-                    duration = new Duration(trackedItem.prices[i + 1].dateEstablished,
-                        trackedItem.prices[i].dateEstablished);
-                    if (duration.hour) {
-                        durationAttr = duration.toString(1, 3);
-                    } else {
-                        durationAttr = duration.toString(1, 4);
+                    duration = moment.duration(trackedItem.prices[i + 1].dateEstablished.valueOf() -
+                        trackedItem.prices[i].dateEstablished.valueOf()).humanize();
+                    if (duration === "a day") {
+                        duration = "1 day";
                     }
                 } else {
                     // there was no previous, previous price
-                    durationAttr = null;
+                    duration = null;
                 }
                 trackedItemUI.pastPrices.push({
                     price: trackedItem.prices[i].price,
                     uri: trackedItem.prices[i].uri,
                     date: trackedItem.prices[i].dateEstablished,
-                    duration: durationAttr
+                    duration: duration
                 });
             }
         }
