@@ -27,15 +27,8 @@ define([
         },
 
         initialize: function() {
-            this.on("route", this.routeCalled, this);
-
             this.currentView = null;
             this.footerView = null;
-        },
-
-        routeCalled: function(routeCalled, args) {
-            // scroll to the top of the window on every route call
-            window.scrollTo(0, 0);
         },
 
         defaultRoute: function() {
