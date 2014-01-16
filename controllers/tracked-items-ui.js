@@ -307,8 +307,8 @@ function generateTrackedItemUI(trackedItem) {
             for (i = 1; i < trackedItem.prices.length; i++) {
                 if (trackedItem.prices.length > i + 1) {
                     // there was a previous, previous price
-                    duration = new Duration(trackedItem.prices[i].dateEstablished,
-                        trackedItem.prices[i + 1].dateEstablished);
+                    duration = new Duration(trackedItem.prices[i + 1].dateEstablished,
+                        trackedItem.prices[i].dateEstablished);
                     if (duration.hour) {
                         durationAttr = duration.toString(1, 3);
                     } else {
