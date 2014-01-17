@@ -8,21 +8,22 @@ h1, h2, h3 {
     text-align: center;
     color: rgb(200, 200, 200);
 }
-h3 {
-    color: rgb(200, 200, 200);
-}
 a, a:hover, a:active {
     color: rgb(51, 51, 51);
     text-decoration: none;
 }
 table {
     margin-bottom: 1em;
+    cursor: pointer;
 }
 .tracked-items-category {
     margin-top: 2em;
 }
 .tracked-items-category h2 {
     margin-bottom: 0.5em;
+}
+.tracked-items-subcategory h3 {
+    text-align: left;
 }
 .tracked-item {
     background-color: rgb(230, 230, 230);

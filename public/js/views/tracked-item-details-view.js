@@ -17,6 +17,7 @@ define([
         templateDetails: _.template(trackedItemDetailsHtml),
 
         events: {
+            "click table": "redirectToPriceSite",
             "click #edit": "displayEditableDetails",
             "click #back": "cancel",
             "click #update": "updateTrackedItem",
@@ -58,6 +59,12 @@ define([
             trackedItemDetailsSelector.append(this.templateDetails(model));
 
             return this;
+        },
+
+        redirectToPriceSite: function(ev) {
+            ev.preventDefault();
+
+            location.href = this.model.toJSON().currentPrice.uri;
         },
 
         displayEditableDetails: function(ev) {
