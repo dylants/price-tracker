@@ -198,7 +198,7 @@ module.exports = function(app) {
 
         app.patch("/tracked-items-ui/:id", function(req, res) {
             TrackedItem.findById(req.params.id, function(err, trackedItem) {
-                var name, category, subcategory, update;
+                var name, category, subcategory, uri1, uri2, update;
 
                 if (err) {
                     console.error(err);
@@ -210,11 +210,11 @@ module.exports = function(app) {
                     return;
                 }
 
-                // currently we support updating the name, category, and
-                // subcategory only
                 name = req.body.name;
                 category = req.body.category;
                 subcategory = req.body.subcategory;
+                uri1 = req.body.uri1;
+                uri2 = req.body.uri2;
 
                 if (name && trackedItem.name !== name) {
                     console.log("updating name of tracked item to: " + name);
@@ -229,6 +229,17 @@ module.exports = function(app) {
                 if (subcategory && trackedItem.subcategory !== subcategory) {
                     console.log("updating subcategory of tracked item to: " + subcategory);
                     trackedItem.subcategory = subcategory;
+                    update = true;
+                }
+
+                // if there's a URI, update both URIs
+                if (uri1) {
+                    console.log("updating tracked item uri1: " + uri1 + " uri2: " + uri2);
+                    trackedItem.uris = [];
+                    trackedItem.uris.push(uri1);
+                    if (uri2) {
+                        trackedItem.uris.push(uri2);
+                    }
                     update = true;
                 }
 
@@ -300,6 +311,8 @@ function generateTrackedItemUI(trackedItem) {
     trackedItemUI.name = trackedItem.name;
     trackedItemUI.category = trackedItem.category;
     trackedItemUI.subcategory = trackedItem.subcategory ? trackedItem.subcategory : "";
+    trackedItemUI.uri1 = trackedItem.uris[0] ? trackedItem.uris[0] : "";
+    trackedItemUI.uri2 = trackedItem.uris[1] ? trackedItem.uris[1] : "";
     // does this tracked item has a price?
     if (trackedItem.prices.length > 0) {
         trackedItemUI.currentPrice = {};

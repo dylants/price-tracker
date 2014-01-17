@@ -75,20 +75,22 @@ define([
         },
 
         updateTrackedItem: function(ev) {
-            var uri, name, category, subcategory;
+            var name, category, subcategory, uri1, uri2;
 
             ev.preventDefault();
 
-            uri = $("input[id='uri']").val();
             name = $("input[id='name']").val();
             category = $("input[id='category']").val();
             subcategory = $("input[id='subcategory']").val();
+            uri1 = $("input[id='uri1']").val();
+            uri2 = $("input[id='uri2']").val();
 
             this.model.save({
-                uri: uri,
                 name: name,
                 category: category,
-                subcategory: subcategory
+                subcategory: subcategory,
+                uri1: uri1,
+                uri2: uri2
             }, {
                 patch: true,
                 success: function(model, response, options) {
