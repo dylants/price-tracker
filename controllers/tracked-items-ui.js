@@ -318,6 +318,7 @@ function generateTrackedItemUI(trackedItem) {
         trackedItemUI.currentPrice = {};
         trackedItemUI.currentPrice.price = trackedItem.prices[0].price;
         trackedItemUI.currentPrice.uri = trackedItem.prices[0].uri;
+        trackedItemUI.currentPrice.imageUri = findSiteImage(trackedItemUI.currentPrice.uri);
         trackedItemUI.currentPrice.date = trackedItem.prices[0].dateEstablished;
         // calculate the duration of time this price has existed
         duration = moment.duration(trackedItem.prices[0].dateEstablished.valueOf() -
@@ -346,6 +347,7 @@ function generateTrackedItemUI(trackedItem) {
                 trackedItemUI.pastPrices.push({
                     price: trackedItem.prices[i].price,
                     uri: trackedItem.prices[i].uri,
+                    imageUri: findSiteImage(trackedItem.prices[i].uri),
                     date: trackedItem.prices[i].dateEstablished,
                     duration: duration
                 });
@@ -354,4 +356,18 @@ function generateTrackedItemUI(trackedItem) {
     }
 
     return trackedItemUI;
+}
+
+function findSiteImage(uri) {
+    var imageUri;
+
+    if (uri.indexOf("amazon.com") > -1) {
+        imageUri = "/public/img/amazon.png";
+    } else if (uri.indexOf("play.google.com") > -1) {
+        imageUri = "/public/img/google-play.png";
+    } else if (uri.indexOf("bestbuy.com") > -1) {
+        imageUri = "/public/img/best-buy.png";
+    }
+
+    return imageUri;
 }

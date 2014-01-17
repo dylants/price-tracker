@@ -8,6 +8,7 @@
         <tr class="item-price">
             <td class="item-price-heading">Price</td>
             <td class="item-price-heading">Duration</td>
+            <td class="item-price-heading">Site</td>
         </tr>
         </thead>
         <tr class="item-price">
@@ -23,6 +24,7 @@
                 <td class="price"><%- accounting.formatMoney(currentPrice.price) %></td>
                 <td class="duration"><%- currentPrice.duration %></td>
             <% } %>
+            <td><img src="<%- currentPrice.imageUri %>" class="site-img img-responsive"></td>
         </tr>
         <% var i, pastPrice; %>
         <% for (i = 0; i < pastPrices.length; i++) { %>
@@ -39,6 +41,7 @@
                     <td class="price"><%- accounting.formatMoney(pastPrices[i].price) %></td>
                     <td class="duration"><%- pastPrices[i].duration %></td>
                 <% } %>
+                <td><img src="<%- pastPrices[i].imageUri %>" class="site-img img-responsive"></td>
             </tr>
         <% } %>
     </table>

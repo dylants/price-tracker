@@ -59,6 +59,10 @@ table {
 .recent-price-decrease {
     background-color: rgb(200, 225, 200);
 }
+.site-img {
+    height: 1.75em;
+    margin: 0 auto;
+}
 #add-tracked-item {
     text-align: center;
 }
