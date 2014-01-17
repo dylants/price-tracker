@@ -1,25 +1,8 @@
-<form class="form-horizontal" role="form">
+<h2><%- name %></h2>
 
-    <div class="item-row form-group">
-        <label for="name" class="tracked-item-details-label col-md-2 col-md-offset-1 control-label">Name</label>
-        <div class="col-md-6">
-            <input type="text" class="form-control" id="name" placeholder="Item Name" value="<%- name %>">
-        </div>
-    </div>
-    <div class="item-row form-group">
-        <label for="category" class="tracked-item-details-label col-md-2 col-md-offset-1 control-label">Category</label>
-        <div class="col-md-2">
-            <input type="text" class="form-control" id="category" placeholder="Category" value="<%- category %>">
-        </div>
-        <label for="subcategory" id="subcategory-label" class="tracked-item-details-label col-md-2 control-label">Subcategory</label>
-        <div class="col-md-2">
-            <input type="text" class="form-control" id="subcategory" placeholder="Subcategory" value="<%- subcategory %>">
-        </div>
-    </div>
+<h3>Price History</h3>
 
-    <h2>Price History</h2>
-
-    <div class="form-group">
+<div class="row">
     <table class="table-bordered table-striped col-md-offset-4 col-md-4 col-sm-12 col-xs-12">
         <thead>
         <tr class="item-price">
@@ -59,14 +42,43 @@
             </tr>
         <% } %>
     </table>
-    </div>
+</div>
 
-    <div class="item-row form-group">
-        <div class="tracked-item-details-buttons">
-            <button id="update" class="tracked-item-details-button btn btn-default">Update</button>
-            <button id="delete" class="tracked-item-details-button btn btn-default">Delete</button>
-            <button id="cancel" class="tracked-item-details-button btn btn-default">Cancel</button>
+<div id="editable-details-buttons" class="row">
+    <div class="tracked-item-details-buttons">
+        <button id="edit" class="tracked-item-details-button btn btn-default">Edit Item</button>
+        <button id="back" class="tracked-item-details-button btn btn-default">Back</button>
+    </div>
+</div>
+
+<div id="editable-details" style="display:none;">
+    <h3>Item Details</h3>
+
+    <form class="form-horizontal" role="form">
+
+        <div class="item-row form-group">
+            <label for="name" class="tracked-item-details-label col-md-2 col-md-offset-1 control-label">Name</label>
+            <div class="col-md-6">
+                <input type="text" class="form-control" id="name" placeholder="Item Name" value="<%- name %>">
+            </div>
         </div>
-    </div>
+        <div class="item-row form-group">
+            <label for="category" class="tracked-item-details-label col-md-2 col-md-offset-1 control-label">Category</label>
+            <div class="col-md-2">
+                <input type="text" class="form-control" id="category" placeholder="Category" value="<%- category %>">
+            </div>
+            <label for="subcategory" id="subcategory-label" class="tracked-item-details-label col-md-2 control-label">Subcategory</label>
+            <div class="col-md-2">
+                <input type="text" class="form-control" id="subcategory" placeholder="Subcategory" value="<%- subcategory %>">
+            </div>
+        </div>
+        <div class="item-row form-group">
+            <div class="tracked-item-details-buttons">
+                <button id="update" class="tracked-item-details-button btn btn-default">Update</button>
+                <button id="delete" class="tracked-item-details-button btn btn-default">Delete</button>
+                <button id="cancel" class="tracked-item-details-button btn btn-default">Cancel</button>
+            </div>
+        </div>
 
-</form>
+    </form>
+</div>

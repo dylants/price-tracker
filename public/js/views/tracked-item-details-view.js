@@ -17,13 +17,15 @@ define([
         templateDetails: _.template(trackedItemDetailsHtml),
 
         events: {
+            "click #edit": "displayEditableDetails",
+            "click #back": "cancel",
             "click #update": "updateTrackedItem",
             "click #delete": "deleteTrackedItem",
             "click #cancel": "cancel"
         },
 
         initialize: function() {
-            this.model.on( "sync", this.renderItemDetails, this );
+            this.model.on("sync", this.renderItemDetails, this);
         },
 
         close: function() {
@@ -56,6 +58,13 @@ define([
             trackedItemDetailsSelector.append(this.templateDetails(model));
 
             return this;
+        },
+
+        displayEditableDetails: function(ev) {
+            ev.preventDefault();
+
+            $("#editable-details-buttons").hide();
+            $("#editable-details").show();
         },
 
         updateTrackedItem: function(ev) {
@@ -94,7 +103,7 @@ define([
                 }
             });
         },
-        
+
         cancel: function(ev) {
             ev.preventDefault();
 

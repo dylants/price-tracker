@@ -4,7 +4,7 @@ body {
     /* to allow for the footer */
     margin-bottom: 2em;
 }
-h1, h2 {
+h1, h2, h3 {
     text-align: center;
     color: rgb(200, 200, 200);
 }
@@ -14,6 +14,9 @@ h3 {
 a, a:hover, a:active {
     color: rgb(51, 51, 51);
     text-decoration: none;
+}
+table {
+    margin-bottom: 1em;
 }
 .tracked-items-category {
     margin-top: 2em;
@@ -81,8 +84,6 @@ a, a:hover, a:active {
 }
 .item-price {
     background-color: rgb(230, 230, 230);
-    /*border: 1px solid rgb(200, 200, 200);*/
-    /*padding: 0.5em;*/
 }
 .item-price .item-price-heading {
     text-align: center;
