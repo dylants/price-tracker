@@ -24,7 +24,8 @@
         "moment": "~2.5.0",
         "cron": "~1.0.1",
         "duration": "~0.1.4",
-        "zombie": "~2.0.0-alpha24"
+        "zombie": "~2.0.0-alpha24",
+        "phantom": "~0.5.4"
     },
     "devDependencies": {
         "grunt": "~0.4.1",
