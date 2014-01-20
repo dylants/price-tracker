@@ -1,6 +1,9 @@
-var Browser = require("zombie"),
+var priceUpdater = require("../lib/price-updater"),
+    Browser = require("zombie"),
     moment = require("moment"),
-    phantom = require("phantom");
+    phantom = require("phantom"),
+    mongoose = require("mongoose"),
+    TrackedFlight = mongoose.model("TrackedFlight");
 
 module.exports = function(app) {
     app.namespace("/api", function() {
@@ -98,6 +101,26 @@ module.exports = function(app) {
                     });
                 });
             });
+        });
+
+        app.get("/flights/add-flight", function(req, res) {
+            var trackedFlight;
+
+            trackedFlight = new TrackedFlight({
+                airline: "southwest",
+                departureAirport: "AUS",
+                arrivalAirport: "SJC",
+                flightType: "ROUND-TRIP"
+            });
+            trackedFlight.save();
+            res.send("done!");
+        });
+
+        app.get("/flights/update", function(req, res) {
+            console.log("Manual trigger of price update");
+            // issue the request in the background, returning immediately
+            priceUpdater.updateTrackedFlights();
+            res.send("update requested");
         });
     });
 };
