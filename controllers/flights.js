@@ -10,7 +10,11 @@ module.exports = function(app) {
 
             // use southwest for flights
             browser.visit("http://www.southwest.com", function() {
-                var today;
+                var results, today;
+
+                results = {};
+                results.outboundPrices = [];
+                results.inboundPrices = [];
 
                 // select the origin and destination airports
                 browser.select("originAirport", "AUS");
@@ -25,12 +29,36 @@ module.exports = function(app) {
                 browser.pressButton("Search", function() {
                     // click the link to show prices over the course of a month
                     browser.clickLink(".shortcutNotification a", function() {
-                        var result;
+                        // record the prices for this month
+                        results.outboundPrices.push(browser.text(".outboundCalendar table"));
+                        results.inboundPrices.push(browser.text(".returnCalendar table"));
 
-                        result = {};
-                        result.outboundPrices = browser.text(".outboundCalendar table");
-                        result.inboundPrices = browser.text(".returnCalendar table");
-                        res.send(result);
+                        // move on to the next month
+                        browser.clickLink(".carouselEnabledSodaIneligible a", function() {
+                            var uri, month;
+
+                            // record the prices for this month
+                            results.outboundPrices.push(browser.text(".outboundCalendar table"));
+                            results.inboundPrices.push(browser.text(".returnCalendar table"));
+
+                            // build the URI for the next month
+                            uri = browser.location.href;
+                            uri = uri.slice(0, uri.indexOf("outboundMonth"));
+                            month = today.add("months", 2).format("M");
+                            uri = uri + "outboundMonth=" + month +
+                                "&inboundMonth=" + month + "&selectedOutboundDate=&selectedInboundDate=";
+
+                            // move to the next month
+                            browser.location = uri;
+                            browser.wait(function() {
+                                // record the prices for this month
+                                results.outboundPrices.push(browser.text(".outboundCalendar table"));
+                                results.inboundPrices.push(browser.text(".returnCalendar table"));
+
+                                // return the results
+                                res.send(results);
+                            });
+                        });
                     });
                 });
             });
