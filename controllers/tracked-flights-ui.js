@@ -10,14 +10,63 @@ module.exports = function(app) {
 
             trackedFlightsUI = {};
 
+            // add calendar months to our UI result object
             trackedFlightsUI.months = [];
-
             today = moment(new Date());
             beginningOfMonth = moment((today.month() + 1) + "/01/" + today.year());
 
+            // add the current month
             trackedFlightsUI.months.push(buildMonth(beginningOfMonth));
 
-            res.send(trackedFlightsUI);
+            // add tracked flight prices
+            TrackedFlight.find(function(err, trackedFlights) {
+                var i, trackedFlight, j, price, date, priceString;
+
+                if (err) {
+                    console.error(err);
+                    res.send(500);
+                    return;
+                }
+
+                trackedFlightsUI.prices = {};
+
+                // loop over all the tracked flights
+                for (i = 0; i < trackedFlights.length; i++) {
+                    trackedFlight = trackedFlights[i].toJSON();
+
+                    // loop over all the prices for this tracked flight
+                    for (j = 0; j < trackedFlight.prices.length; j++) {
+                        price = trackedFlight.prices[j];
+
+                        // create a simple date string
+                        date = (price.date.getMonth() + 1) + "-" +
+                            price.date.getDate() + "-" +
+                            price.date.getFullYear();
+
+                        // create a price string for this date
+                        if (price.isOutbound) {
+                            priceString = trackedFlight.departureAirport + "→" +
+                                trackedFlight.arrivalAirport + " $" +
+                                price.price;
+                        } else {
+                            priceString = trackedFlight.arrivalAirport + "→" +
+                                trackedFlight.departureAirport + " $" +
+                                price.price;
+                        }
+
+                        // if no prices exist for that date, initialize the array
+                        if (!trackedFlightsUI.prices[date]) {
+                            trackedFlightsUI.prices[date] = [];
+                        }
+
+                        // add the price string for that date
+                        trackedFlightsUI.prices[date].push(priceString);
+                    }
+                }
+
+                // with everything done, return our UI result object
+                res.send(trackedFlightsUI);
+            });
         });
     });
 };
