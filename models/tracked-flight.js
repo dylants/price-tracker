@@ -26,7 +26,15 @@ var TrackedFlightSchema = new Schema({
         },
         isOutbound: {
             type: Boolean
-        }
+        },
+        pastPrices: [{
+            price: {
+                type: Number
+            },
+            dateEstablished: {
+                type: Date
+            }
+        }]
     }]
 });
 
