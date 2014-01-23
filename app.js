@@ -4,9 +4,7 @@ var express = require("express"),
     cons = require("consolidate"),
     app = express(),
     passport = require("passport"),
-    mongoose = require("mongoose"),
-    http = require("http"),
-    https = require("https");
+    mongoose = require("mongoose");
 
 // 365 days for session cookie lifetime
 var SESSION_COOKIE_LIFETIME = 1000 * 60 * 60 * 24 * 365;
@@ -26,17 +24,6 @@ var requireAuthentication = function(req, res, next) {
 app.configure(function() {
     // read the port from the environment, else set to 3000
     app.set("port", process.env.PORT || 3000);
-    app.set("httpsPort", process.env.HTTPS_PORT || 3400);
-
-    // redirect all HTTP requests to HTTPS
-    app.use(function(req, res, next) {
-        var hostname;
-        if (!req.secure) {
-            hostname = req.get("host").split(":")[0];
-            return res.redirect(["https://", hostname, ":", app.get("httpsPort"), req.url].join(""));
-        }
-        next();
-    });
 
     // configure view rendering (underscore)
     app.engine("html", cons.underscore);
@@ -115,18 +102,7 @@ app.configure("production", function() {
     });
 });
 
-// HTTPS configuration
-var httpsOptions = {
-    key: fs.readFileSync("certs/server.key"),
-    cert: fs.readFileSync("certs/server.crt")
-};
-
 // start the app on HTTP
 app.listen(app.get("port"), function() {
     console.log("Express server listening on HTTP on port " + app.get("port"));
-});
-
-// start the app on HTTPS
-https.createServer(httpsOptions, app).listen(app.get("httpsPort"), function() {
-    console.log("Express server listening on HTTPS on port " + app.get("httpsPort"));
 });
