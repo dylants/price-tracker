@@ -1,12 +1,13 @@
-    <div class="row">
-<a href="tracked-item-details/<%- id %>">
+<div class="row">
+    <a href="tracked-item-details/<%- id %>">
         <div class="tracked-item col-md-offset-2 col-md-8">
+            <% if (pastPrices.length === 0) { %>
+                <% var nameLength = 30; %>
+            <div class="tracked-item-name visible-mobile">
+            <% } else { %>
+                <% var nameLength = 40; %>
             <div class="tracked-item-name-own-row visible-mobile">
-                <% if (pastPrices.length === 0) { %>
-                    <% var nameLength = 30; %>
-                <% } else { %>
-                    <% var nameLength = 40; %>
-                <% } %>
+            <% } %>
                 <% if (name.length > nameLength) { %>
                     <%- name.substring(0, nameLength).trim() + "..." %>
                 <% } else { %>
@@ -77,5 +78,5 @@
                 </div>
             <% } %>
         </div>
-</a>
-    </div>
+    </a>
+</div>
