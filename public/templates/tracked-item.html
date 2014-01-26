@@ -1,22 +1,50 @@
-<a href="tracked-item-details/<%- id %>">
     <div class="row">
-        <div class="tracked-item col-md-offset-3 col-md-6">
-            <% if (pastPrices.length === 0) { %>
-                <% var nameLength = 30; %>
-            <div class="tracked-item-name visible-xs">
-            <% } else { %>
-                <% var nameLength = 40; %>
-            <div class="tracked-item-name-own-row visible-xs">
-            <% } %>
+<a href="tracked-item-details/<%- id %>">
+        <div class="tracked-item col-md-offset-2 col-md-8">
+            <div class="tracked-item-name-own-row visible-mobile">
+                <% if (pastPrices.length === 0) { %>
+                    <% var nameLength = 30; %>
+                <% } else { %>
+                    <% var nameLength = 40; %>
+                <% } %>
                 <% if (name.length > nameLength) { %>
                     <%- name.substring(0, nameLength).trim() + "..." %>
                 <% } else { %>
                     <%- name %>
                 <% } %>
             </div>
-            <div class="tracked-item-name hidden-xs">
-                <% if (name.length > 50) { %>
-                    <%- name.substring(0, 50).trim() + "..." %>
+            <div class="tracked-item-name hidden-mobile visible-xs">
+                <% if (pastPrices.length === 0) { %>
+                    <% var nameLength = 30; %>
+                <% } else { %>
+                    <% var nameLength = 40; %>
+                <% } %>
+                <% if (name.length > nameLength) { %>
+                    <%- name.substring(0, nameLength).trim() + "..." %>
+                <% } else { %>
+                    <%- name %>
+                <% } %>
+            </div>
+            <div class="tracked-item-name hidden-mobile hidden-xs">
+                <% if (pastPrices.length === 0) { %>
+                    <% var nameLength = 30; %>
+                <% } else { %>
+                    <% var nameLength = 50; %>
+                <% } %>
+                <% if (name.length > nameLength) { %>
+                    <%- name.substring(0, nameLength).trim() + "..." %>
+                <% } else { %>
+                    <%- name %>
+                <% } %>
+            </div>
+            <div class="tracked-item-name hidden-mobile hidden-xs hidden-sm hidden-md">
+                <% if (pastPrices.length === 0) { %>
+                    <% var nameLength = 30; %>
+                <% } else { %>
+                    <% var nameLength = 60; %>
+                <% } %>
+                <% if (name.length > nameLength) { %>
+                    <%- name.substring(0, nameLength).trim() + "..." %>
                 <% } else { %>
                     <%- name %>
                 <% } %>
@@ -49,5 +77,5 @@
                 </div>
             <% } %>
         </div>
-    </div>
 </a>
+    </div>

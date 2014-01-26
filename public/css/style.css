@@ -118,7 +118,19 @@ footer {
     right: 1em;
     bottom: 0.35em;
 }
-/* small */
+.visible-mobile {
+    display: none !important;
+}
+/* mobile */
+ @media (max-width: 559px) {
+    .hidden-mobile {
+        display: none !important;
+    }
+    .visible-mobile {
+        display: block !important;
+    }
+}
+/* bootstrap small */
  @media (max-width: 992px) {
     #subcategory-label {
         margin-top: 1em;
