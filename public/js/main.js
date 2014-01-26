@@ -9,6 +9,8 @@ require.config({
         "accounting": "lib/accounting.min",
         "authenticated-collection": "models/authenticated-collection",
         "authenticated-model": "models/authenticated-model",
+        "cached-authenticated-collection": "models/cached-authenticated-collection",
+        "cached-authenticated-model": "models/cached-authenticated-model",
         "footer-model": "models/footer-model",
         "session-model": "models/session-model",
         "tracked-items-ui-collection": "models/tracked-items-ui-collection",

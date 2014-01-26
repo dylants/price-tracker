@@ -1,10 +1,10 @@
 /* global define:true */
 define([
-    "authenticated-model"
-], function(AuthenticatedModel) {
+    "cached-authenticated-model"
+], function(CachedAuthenticatedModel) {
     "use strict";
 
-    return AuthenticatedModel.extend({
+    return CachedAuthenticatedModel.extend({
         urlRoot: "/api/status-ui"
     });
 });

@@ -28,6 +28,8 @@ define([
 
         initialize: function() {
             this.currentView = null;
+            this.trackedItemsUICollection = null;
+            this.footerModel = null;
             this.footerView = null;
         },
 
@@ -52,15 +54,16 @@ define([
         },
 
         trackedItems: function() {
-            var trackedItemsUICollection;
+            if (!this.trackedItemsUICollection) {
+                this.trackedItemsUICollection = new TrackedItemsUICollection();
+            }
 
             if (this.currentView) {
                 this.currentView.close();
             }
 
-            trackedItemsUICollection = new TrackedItemsUICollection();
             this.currentView = new TrackedItemsView({
-                collection: trackedItemsUICollection
+                collection: this.trackedItemsUICollection
             });
             this.currentView.render();
 
@@ -99,15 +102,16 @@ define([
         },
 
         renderFooter: function() {
-            var footerModel;
+            if (!this.footerModel) {
+                this.footerModel = new FooterModel();
+            }
 
             if (this.footerView) {
                 this.footerView.close();
             }
 
-            footerModel = new FooterModel();
             this.footerView = new FooterView({
-                model: footerModel
+                model: this.footerModel
             });
             this.footerView.render();
         },

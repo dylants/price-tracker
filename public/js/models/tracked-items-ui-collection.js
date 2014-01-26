@@ -1,10 +1,10 @@
 /* global define:true */
 define([
-    "authenticated-collection"
-], function(AuthenticatedCollection) {
+    "cached-authenticated-collection"
+], function(CachedAuthenticatedCollection) {
     "use strict";
 
-    return AuthenticatedCollection.extend({
+    return CachedAuthenticatedCollection.extend({
         url: "/api/tracked-items-ui"
     });
 });
