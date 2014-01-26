@@ -20,11 +20,12 @@ define([
         templateSubcategory: _.template(trackedItemsSubcategoryHtml),
 
         events: {
+            "click #display-all-button": "displayAll",
             "click #add-tracked-item-button": "addTrackedItem"
         },
 
         initialize: function() {
-            this.collection.on( "sync", this.renderTrackedItems, this );
+            this.collection.on("sync", this.renderTrackedItems, this);
         },
 
         close: function() {
@@ -117,6 +118,12 @@ define([
                     } else {
                         categorySelector.append(trackedItemView.render().el);
                     }
+
+                    // if the item view should be displayed, display
+                    // the category
+                    if (trackedItemView.shouldDisplay()) {
+                        categorySelector.show();
+                    }
                 });
             });
 
@@ -129,6 +136,12 @@ define([
             Backbone.history.navigate("add-tracked-item", {
                 trigger: true
             });
+        },
+
+        displayAll: function(ev) {
+            ev.preventDefault();
+
+            $(this.el).find(".tracked-items-subcategory").show();
         }
     });
 });

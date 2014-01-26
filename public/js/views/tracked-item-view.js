@@ -15,7 +15,9 @@ define([
             "click .tracked-item": "viewItemDetails"
         },
 
-        initialize: function() {},
+        initialize: function() {
+            this.shouldBeDisplayed = false;
+        },
 
         close: function() {
             // release all event listeners
@@ -46,6 +48,9 @@ define([
                     } else {
                         $(this.el).find(".tracked-item").addClass("recent-price-increase");
                     }
+
+                    // a price change means we should display this item
+                    this.shouldBeDisplayed = true;
                 }
             }
 
@@ -58,6 +63,10 @@ define([
             Backbone.history.navigate("tracked-item-details/" + this.model.id, {
                 trigger: true
             });
+        },
+
+        shouldDisplay: function() {
+            return this.shouldBeDisplayed;
         }
     });
 });

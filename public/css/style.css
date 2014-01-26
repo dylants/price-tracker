@@ -63,16 +63,16 @@ table {
     height: 1.75em;
     margin: 0 auto;
 }
-#add-tracked-item {
+#add-tracked-item, #display-all {
     text-align: center;
 }
-#add-tracked-item-button {
+#add-tracked-item-button, #display-all-button {
     background-color: rgb(200, 200, 200);
     margin-top: 3em;
     margin-bottom: 1em;
     width: 15em;
 }
-#add-tracked-item-button:hover {
+#add-tracked-item-button:hover, #display-all-button:hover {
     background-color: rgb(230, 230, 230);
 }
 .add-tracked-item-label, .tracked-item-details-label {
