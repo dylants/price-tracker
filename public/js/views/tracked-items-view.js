@@ -25,7 +25,7 @@ define([
         },
 
         initialize: function() {
-            this.collection.on("sync", this.renderTrackedItems, this);
+            this.collection.on("sync", this.renderTrackedItemsWithPriceChange, this);
         },
 
         close: function() {
@@ -38,13 +38,21 @@ define([
             this.$el.html(this.template());
 
             // fetch on the collection which will trigger the sync, and
-            // call the renderTrackedItems function
+            // render the tracked items
             this.collection.fetch();
 
             return this;
         },
 
-        renderTrackedItems: function() {
+        renderTrackedItemsWithPriceChange: function() {
+            this.renderTrackedItems(true);
+        },
+
+        renderAllTrackedItems: function() {
+            this.renderTrackedItems(false);
+        },
+
+        renderTrackedItems: function(onlyRenderWithPriceChange) {
             var trackedItemsSelector, trackedItemsUI, categories, that;
 
             trackedItemsSelector = $("#tracked-items");
@@ -57,7 +65,7 @@ define([
             that = this;
             this.collection.each(function(model) {
                 var category, hasSubcategories, categoryHtml, categorySelector,
-                    trackedItemsPerCategory;
+                    categorySubcategorySelector, trackedItemsPerCategory;
 
                 model = model.toJSON();
                 category = model.category;
@@ -72,62 +80,85 @@ define([
                     categoryHtml: categoryHtml
                 }));
                 categorySelector = $("#tracked-items-" + categoryHtml);
+                categorySubcategorySelector = $("#tracked-items-subcategory-for-" +
+                    categoryHtml);
 
                 trackedItemsPerCategory = model.trackedItems;
                 trackedItemsPerCategory.forEach(function(trackedItem) {
-                    var trackedItemModel, trackedItemView, subcategory,
-                        subcategoryHtml, subcategorySelector;
+                    var currentPriceDate, yesterday;
 
-                    trackedItemModel = new TrackedItemModel(trackedItem);
-                    trackedItemView = new TrackedItemView({
-                        model: trackedItemModel
-                    });
+                    currentPriceDate = moment(trackedItem.currentPrice.date);
+                    yesterday = moment(new Date());
+                    yesterday.subtract("days", 1);
 
-                    // if this category has subcategories, append this
-                    // tracked item to a subcategory. Otherwise, append
-                    // this tracked item (and all tracked items within
-                    // this category) to the category.
-                    if (hasSubcategories) {
-                        // get the subcategory from the tracked item. If it
-                        // doesn't have one, set it to "Other"
-                        subcategory = trackedItem.subcategory ? trackedItem.subcategory : "Other";
-
-                        // attempt to find the subcategory on the page to
-                        // see if it's already been added
-                        subcategoryHtml = subcategory.toLowerCase().replace(/\s*/g, "");
-                        subcategoryHtml = subcategoryHtml.replace(/[^\w\s]/gi, "");
-                        subcategorySelector = $("#tracked-items-" + categoryHtml +
-                            "-" + subcategoryHtml);
-                        if (subcategorySelector.length > 0) {
-                            // the subcategory has already been added, so just
-                            // append the view
-                            subcategorySelector.append(trackedItemView.render().el);
-                        } else {
-                            // the subcategory has not yet been added, add it
-                            categorySelector.append(that.templateSubcategory({
-                                subcategory: subcategory,
-                                categoryHtml: categoryHtml,
-                                subcategoryHtml: subcategoryHtml
-                            }));
-
-                            // since we've updated the page, refresh the selector
-                            subcategorySelector = $(subcategorySelector.selector);
-                            // and append the view to our subcategory
-                            subcategorySelector.append(trackedItemView.render().el);
+                    if (onlyRenderWithPriceChange) {
+                        // Only show those tracked items which have a
+                        // change in price within the past 24 hours
+                        if (currentPriceDate.isAfter(yesterday) && trackedItem.pastPrices[0]) {
+                            // show this category
+                            categorySelector.show();
+                            // render the tracked item within that category
+                            that.renderTrackedItem(trackedItem, hasSubcategories,
+                                categorySubcategorySelector, categoryHtml);
                         }
                     } else {
-                        categorySelector.append(trackedItemView.render().el);
-                    }
-
-                    // if the item view should be displayed, display
-                    // the category
-                    if (trackedItemView.shouldDisplay()) {
+                        // render it no matter the price change
+                        // show this category
                         categorySelector.show();
+                        // render the tracked item within that category
+                        that.renderTrackedItem(trackedItem, hasSubcategories,
+                            categorySubcategorySelector, categoryHtml);
                     }
                 });
             });
 
             return this;
+        },
+
+        renderTrackedItem: function(trackedItem, hasSubcategories, categorySubcategorySelector, categoryHtml) {
+            var trackedItemModel, trackedItemView, subcategory,
+                subcategoryHtml, subcategorySelector;
+
+            trackedItemModel = new TrackedItemModel(trackedItem);
+            trackedItemView = new TrackedItemView({
+                model: trackedItemModel
+            });
+
+            // if this category has subcategories, append this
+            // tracked item to a subcategory. Otherwise, append
+            // this tracked item (and all tracked items within
+            // this category) to the category.
+            if (hasSubcategories) {
+                // get the subcategory from the tracked item. If it
+                // doesn't have one, set it to "Other"
+                subcategory = trackedItem.subcategory ? trackedItem.subcategory : "Other";
+
+                // attempt to find the subcategory on the page to
+                // see if it's already been added
+                subcategoryHtml = subcategory.toLowerCase().replace(/\s*/g, "");
+                subcategoryHtml = subcategoryHtml.replace(/[^\w\s]/gi, "");
+                subcategorySelector = $("#tracked-items-" + categoryHtml +
+                    "-" + subcategoryHtml);
+                if (subcategorySelector.length > 0) {
+                    // the subcategory has already been added, so just
+                    // append the view
+                    subcategorySelector.append(trackedItemView.render().el);
+                } else {
+                    // the subcategory has not yet been added, add it
+                    categorySubcategorySelector.append(this.templateSubcategory({
+                        subcategory: subcategory,
+                        categoryHtml: categoryHtml,
+                        subcategoryHtml: subcategoryHtml
+                    }));
+
+                    // since we've updated the page, refresh the selector
+                    subcategorySelector = $(subcategorySelector.selector);
+                    // and append the view to our subcategory
+                    subcategorySelector.append(trackedItemView.render().el);
+                }
+            } else {
+                categorySubcategorySelector.append(trackedItemView.render().el);
+            }
         },
 
         addTrackedItem: function(ev) {
@@ -141,7 +172,7 @@ define([
         displayAll: function(ev) {
             ev.preventDefault();
 
-            $(this.el).find(".tracked-items-subcategory").show();
+            this.renderAllTrackedItems();
         }
     });
 });

@@ -63,13 +63,12 @@ table {
     height: 1.75em;
     margin: 0 auto;
 }
-#add-tracked-item, #display-all {
+#tracked-items-buttons {
     text-align: center;
 }
-#add-tracked-item-button, #display-all-button {
+#display-all-button, #add-tracked-item-button {
     background-color: rgb(200, 200, 200);
-    margin-top: 3em;
-    margin-bottom: 1em;
+    margin: 3em 1em 1em;
     width: 15em;
 }
 #add-tracked-item-button:hover, #display-all-button:hover {
@@ -128,6 +127,9 @@ footer {
     }
     .visible-mobile {
         display: block !important;
+    }
+    #add-tracked-item-button {
+        margin-top: 1em;
     }
 }
 /* bootstrap small */

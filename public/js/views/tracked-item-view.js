@@ -15,9 +15,7 @@ define([
             "click .tracked-item": "viewItemDetails"
         },
 
-        initialize: function() {
-            this.shouldBeDisplayed = false;
-        },
+        initialize: function() {},
 
         close: function() {
             // release all event listeners
@@ -42,15 +40,12 @@ define([
                 currentPriceDate = moment(model.currentPrice.date);
                 yesterday = moment(new Date());
                 yesterday.subtract("days", 1);
-                if (currentPriceDate.isAfter(yesterday)) {
+                if (currentPriceDate.isAfter(yesterday) && model.pastPrices[0]) {
                     if (model.currentPrice.price < model.pastPrices[0].price) {
                         $(this.el).find(".tracked-item").addClass("recent-price-decrease");
                     } else {
                         $(this.el).find(".tracked-item").addClass("recent-price-increase");
                     }
-
-                    // a price change means we should display this item
-                    this.shouldBeDisplayed = true;
                 }
             }
 
@@ -63,10 +58,6 @@ define([
             Backbone.history.navigate("tracked-item-details/" + this.model.id, {
                 trigger: true
             });
-        },
-
-        shouldDisplay: function() {
-            return this.shouldBeDisplayed;
         }
     });
 });
