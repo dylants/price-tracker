@@ -27,7 +27,11 @@
             </div>
             <label for="subcategory" id="subcategory-label" class="add-tracked-item-label col-md-2 control-label">Subcategory</label>
             <div class="col-md-2">
-                <input type="text" class="form-control" id="subcategory" placeholder="Subcategory" value="">
+                <% if (typeof subcategory !== "undefined") { %>
+                    <input type="text" class="form-control" id="subcategory" placeholder="Subcategory" value="<%- subcategory %>">
+                <% } else { %>
+                    <input type="text" class="form-control" id="subcategory" placeholder="Subcategory" value="">
+                <% } %>
             </div>
         </div>
         <div class="item-row form-group">
