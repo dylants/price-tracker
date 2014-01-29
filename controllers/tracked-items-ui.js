@@ -367,6 +367,8 @@ function findSiteImage(uri) {
         imageUri = "/public/img/google-play.png";
     } else if (uri.indexOf("bestbuy.com") > -1) {
         imageUri = "/public/img/best-buy.png";
+    } else if (uri.indexOf("store.sonyentertainmentnetwork.com") > -1) {
+        imageUri = "/public/img/sony-store.png";
     }
 
     return imageUri;
