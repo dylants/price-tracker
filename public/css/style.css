@@ -138,3 +138,9 @@ footer {
         margin-top: 1em;
     }
 }
+/* bootstrap medium */
+ @media (min-width: 992px) {
+    .tracked-items-subcategory h3 {
+        margin-left: 17%;
+    }
+}
