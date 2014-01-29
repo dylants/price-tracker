@@ -172,6 +172,9 @@ define([
         displayAll: function(ev) {
             ev.preventDefault();
 
+            // deselect the button
+            ev.currentTarget.blur();
+
             this.renderAllTrackedItems();
         }
     });
