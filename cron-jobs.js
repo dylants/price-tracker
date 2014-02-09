@@ -1,4 +1,5 @@
 var cronJob = require("cron").CronJob,
+    utils = require("./lib/utils"),
     priceUpdater = require("./lib/price-updater");
 
 // Run this cron job every Sunday (0) at 7:00:00 AM
