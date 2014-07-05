@@ -6,6 +6,15 @@ define([
 ], function(AuthenticatedCollection, Backbone) {
 
     return AuthenticatedCollection.extend({
+
+        initialize: function() {
+            Backbone.on("clear-cache", this.clearCache, this);
+        },
+
+        clearCache: function() {
+            this._reset();
+        },
+
         fetch: function(options) {
             if (this.models.length > 0) {
                 // don't perform a fetch, but trigger the sync as if

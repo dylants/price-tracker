@@ -100,6 +100,8 @@ define([
                     });
                 }
             });
+
+            Backbone.trigger("clear-cache");
         },
 
         deleteTrackedItem: function(ev) {
@@ -112,6 +114,8 @@ define([
                     });
                 }
             });
+
+            Backbone.trigger("clear-cache");
         },
 
         cancel: function(ev) {

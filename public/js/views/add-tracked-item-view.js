@@ -94,6 +94,8 @@ define([
                 }
             });
 
+            Backbone.trigger("clear-cache");
+
             // TODO disable submit button to prevent double submit
         },
 
