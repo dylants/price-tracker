@@ -1,10 +1,11 @@
-/* global define:true */
+"use strict";
+
 define([
+    "jquery",
     "backbone",
     "underscore",
     "text!../templates/session.html"
-], function(Backbone, _, sessionHtml) {
-    "use strict";
+], function($, Backbone, _, sessionHtml) {
 
     return Backbone.View.extend({
 

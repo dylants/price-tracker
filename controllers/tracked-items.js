@@ -1,3 +1,5 @@
+"use strict";
+
 var priceUpdater = require("../lib/price-updater"),
     mongoose = require("mongoose"),
     TrackedItem = mongoose.model("TrackedItem");

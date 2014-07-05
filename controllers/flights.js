@@ -1,3 +1,7 @@
+"use strict";
+
+/* globals $:false, document:false */
+
 var priceUpdater = require("../lib/price-updater"),
     Browser = require("zombie"),
     moment = require("moment"),

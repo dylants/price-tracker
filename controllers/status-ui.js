@@ -1,3 +1,5 @@
+"use strict";
+
 var Duration = require("duration"),
     mongoose = require("mongoose"),
     Status = mongoose.model("Status");

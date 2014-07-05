@@ -1,11 +1,13 @@
-/* global define:true */
+"use strict";
+
 define([
+    "jquery",
     "backbone",
     "underscore",
+    "moment",
     "accounting",
     "text!../templates/tracked-item.html"
-], function(Backbone, _, accounting, trackedItemHtml) {
-    "use strict";
+], function($, Backbone, _, moment, accounting, trackedItemHtml) {
 
     return Backbone.View.extend({
 

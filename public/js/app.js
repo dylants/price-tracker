@@ -1,4 +1,5 @@
-/*global define:true */
+"use strict";
+
 define([
     "jquery",
     "backbone",

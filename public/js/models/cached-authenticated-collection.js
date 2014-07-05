@@ -1,8 +1,9 @@
-/* global define:true */
+"use strict";
+
 define([
-    "authenticated-collection"
-], function(AuthenticatedCollection) {
-    "use strict";
+    "authenticated-collection",
+    "backbone"
+], function(AuthenticatedCollection, Backbone) {
 
     return AuthenticatedCollection.extend({
         fetch: function(options) {

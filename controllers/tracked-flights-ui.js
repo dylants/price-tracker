@@ -1,3 +1,5 @@
+"use strict";
+
 var moment = require("moment"),
     mongoose = require("mongoose"),
     TrackedFlight = mongoose.model("TrackedFlight");

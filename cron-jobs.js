@@ -1,3 +1,5 @@
+"use strict";
+
 var cronJob = require("cron").CronJob,
     utils = require("./lib/utils"),
     priceUpdater = require("./lib/price-updater");

@@ -1,8 +1,8 @@
-/* global define:true */
+"use strict";
+
 define([
     "cached-authenticated-collection"
 ], function(CachedAuthenticatedCollection) {
-    "use strict";
 
     return CachedAuthenticatedCollection.extend({
         url: "/api/tracked-items-ui"

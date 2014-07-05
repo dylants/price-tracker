@@ -1,9 +1,10 @@
-/* global define:true */
+"use strict";
+
 define([
     "underscore",
-    "authenticated-model"
-], function(_, AuthenticatedModel) {
-    "use strict";
+    "authenticated-model",
+    "backbone"
+], function(_, AuthenticatedModel, Backbone) {
 
     return AuthenticatedModel.extend({
         fetch: function(options) {

@@ -1,4 +1,5 @@
-/*global define:true */
+"use strict";
+
 define([
     "backbone",
     "jquery",
@@ -14,7 +15,6 @@ define([
 ], function(Backbone, $, SessionModel, SessionView, TrackedItemsUICollection,
     TrackedItemsUIModel, TrackedItemsView, AddTrackedItemView, TrackedItemDetailsView,
     FooterModel, FooterView) {
-    "use strict";
 
     var Router = Backbone.Router.extend({
         routes: {

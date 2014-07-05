@@ -1,3 +1,5 @@
+"use strict";
+
 require("express-namespace");
 var express = require("express"),
     fs = require("fs"),

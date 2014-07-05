@@ -1,8 +1,8 @@
-/* global define:true */
+"use strict";
+
 define([
     "authenticated-model"
 ], function(AuthenticatedModel) {
-    "use strict";
 
     return AuthenticatedModel.extend({
         urlRoot: "/api/tracked-items-ui"

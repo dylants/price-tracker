@@ -1,3 +1,5 @@
+"use strict";
+
 var priceUpdater = require("../lib/price-updater"),
     _ = require("underscore"),
     moment = require("moment"),

@@ -1,10 +1,10 @@
-/* global define:true */
+"use strict";
+
 define([
     "backbone",
     "underscore",
     "text!../templates/footer.html"
 ], function(Backbone, _, footerHtml) {
-    "use strict";
 
     return Backbone.View.extend({
 
