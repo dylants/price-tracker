@@ -9,6 +9,7 @@ require.config({
         "text": "lib/text",
         "moment": "lib/moment.min",
         "accounting": "lib/accounting.min",
+        "mobile-detect": "lib/mobile-detect.min",
         "authenticated-collection": "models/authenticated-collection",
         "authenticated-model": "models/authenticated-model",
         "cached-authenticated-collection": "models/cached-authenticated-collection",
@@ -36,6 +37,9 @@ require.config({
         },
         "jquery.loadingdotdotdot": {
             deps: ["jquery"]
+        },
+        "mobile-detect": {
+            exports: "MobileDetect"
         }
     }
 });

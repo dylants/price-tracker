@@ -5,13 +5,14 @@ define([
     "backbone",
     "underscore",
     "moment",
+    "mobile-detect",
     "tracked-items-ui-model",
     "tracked-item-view",
     "text!../templates/tracked-items.html",
     "text!../templates/tracked-items-category.html",
     "text!../templates/tracked-items-subcategory.html"
-], function($, Backbone, _, moment, TrackedItemModel, TrackedItemView, trackedItemsHtml,
-    trackedItemsCategoryHtml, trackedItemsSubcategoryHtml) {
+], function($, Backbone, _, moment, MobileDetect, TrackedItemModel, TrackedItemView,
+    trackedItemsHtml, trackedItemsCategoryHtml, trackedItemsSubcategoryHtml) {
 
     return Backbone.View.extend({
 
@@ -27,7 +28,15 @@ define([
         },
 
         initialize: function() {
-            this.collection.on("sync", this.renderTrackedItemsWithPriceChange, this);
+            var md = new MobileDetect(window.navigator.userAgent);
+            this.isMobile = !!md.mobile();
+
+            // render a subset of tracked items if we're on mobile
+            if (this.isMobile) {
+                this.collection.on("sync", this.renderTrackedItemsWithPriceChange, this);
+            } else {
+                this.collection.on("sync", this.renderAllTrackedItems, this);
+            }
         },
 
         close: function() {
