@@ -76,7 +76,7 @@ define([
         },
 
         updateTrackedItem: function(ev) {
-            var name, category, subcategory, uri1, uri2;
+            var name, category, subcategory, uri1, uri2, uri3, uri4, uri5;
 
             ev.preventDefault();
 
@@ -85,13 +85,19 @@ define([
             subcategory = $("input[id='subcategory']").val();
             uri1 = $("input[id='uri1']").val();
             uri2 = $("input[id='uri2']").val();
+            uri3 = $("input[id='uri3']").val();
+            uri4 = $("input[id='uri4']").val();
+            uri5 = $("input[id='uri5']").val();
 
             this.model.save({
                 name: name,
                 category: category,
                 subcategory: subcategory,
                 uri1: uri1,
-                uri2: uri2
+                uri2: uri2,
+                uri3: uri3,
+                uri4: uri4,
+                uri5: uri5
             }, {
                 patch: true,
                 success: function(model, response, options) {

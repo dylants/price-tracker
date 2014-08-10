@@ -200,7 +200,7 @@ module.exports = function(app) {
 
         app.patch("/tracked-items-ui/:id", function(req, res) {
             TrackedItem.findById(req.params.id, function(err, trackedItem) {
-                var name, category, subcategory, uri1, uri2, update;
+                var name, category, subcategory, uri1, uri2, uri3, uri4, uri5, update;
 
                 if (err) {
                     console.error(err);
@@ -217,6 +217,9 @@ module.exports = function(app) {
                 subcategory = req.body.subcategory;
                 uri1 = req.body.uri1;
                 uri2 = req.body.uri2;
+                uri3 = req.body.uri3;
+                uri4 = req.body.uri4;
+                uri5 = req.body.uri5;
 
                 if (name && trackedItem.name !== name) {
                     console.log("updating name of tracked item to: " + name);
@@ -234,13 +237,26 @@ module.exports = function(app) {
                     update = true;
                 }
 
-                // if there's a URI, update both URIs
+                // if there's a URI, update all URIs
                 if (uri1) {
-                    console.log("updating tracked item uri1: " + uri1 + " uri2: " + uri2);
+                    console.log("updating tracked item uri1: " + uri1);
                     trackedItem.uris = [];
                     trackedItem.uris.push(uri1);
                     if (uri2) {
+                        console.log("updating tracked item uri2: " + uri2);
                         trackedItem.uris.push(uri2);
+                    }
+                    if (uri3) {
+                        console.log("updating tracked item uri3: " + uri3);
+                        trackedItem.uris.push(uri3);
+                    }
+                    if (uri4) {
+                        console.log("updating tracked item uri4: " + uri4);
+                        trackedItem.uris.push(uri4);
+                    }
+                    if (uri5) {
+                        console.log("updating tracked item uri5: " + uri5);
+                        trackedItem.uris.push(uri5);
                     }
                     update = true;
                 }
@@ -315,6 +331,9 @@ function generateTrackedItemUI(trackedItem) {
     trackedItemUI.subcategory = trackedItem.subcategory ? trackedItem.subcategory : "";
     trackedItemUI.uri1 = trackedItem.uris[0] ? trackedItem.uris[0] : "";
     trackedItemUI.uri2 = trackedItem.uris[1] ? trackedItem.uris[1] : "";
+    trackedItemUI.uri3 = trackedItem.uris[2] ? trackedItem.uris[2] : "";
+    trackedItemUI.uri4 = trackedItem.uris[3] ? trackedItem.uris[3] : "";
+    trackedItemUI.uri5 = trackedItem.uris[4] ? trackedItem.uris[4] : "";
     // does this tracked item has a price?
     if (trackedItem.prices.length > 0) {
         trackedItemUI.currentPrice = {};
