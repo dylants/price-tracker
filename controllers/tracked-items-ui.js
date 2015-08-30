@@ -390,6 +390,14 @@ function findSiteImage(uri) {
         imageUri = "/public/img/best-buy.png";
     } else if (uri.indexOf("store.sonyentertainmentnetwork.com") > -1) {
         imageUri = "/public/img/sony-store.png";
+    } else if (uri.indexOf("store.playstation.com") > -1) {
+        imageUri = "/public/img/sony-store.png";
+    } else if (uri.indexOf("gamestop.com") > -1) {
+        imageUri = "/public/img/gamestop.png";
+    } else if (uri.indexOf("crutchfield.com") > -1) {
+        imageUri = "/public/img/crutchfield.png";
+    } else if (uri.indexOf("ebags.com") > -1) {
+        imageUri = "/public/img/ebags.png";
     }
 
     return imageUri;
