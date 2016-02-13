@@ -71,7 +71,7 @@ module.exports = function(app) {
                         // earlier in the array than those without, so in the end
                         // those without a subcategory in a category with subcategories
                         // appear at the end of the array.
-                        // 
+                        //
                         // Also sort the subcategories alphabetically
                         trackedItemUI.trackedItems.sort(function(tiA, tiB) {
                             if (tiA.subcategory && !tiB.subcategory) {
@@ -398,6 +398,8 @@ function findSiteImage(uri) {
         imageUri = "/public/img/crutchfield.png";
     } else if (uri.indexOf("ebags.com") > -1) {
         imageUri = "/public/img/ebags.png";
+    } else if (uri.indexOf("store.steampowered.com") > -1) {
+        imageUri = "/public/img/steam.png";
     }
 
     return imageUri;
