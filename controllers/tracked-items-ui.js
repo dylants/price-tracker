@@ -384,20 +384,26 @@ function findSiteImage(uri) {
 
     if (uri.indexOf("amazon.com") > -1) {
         imageUri = "/public/img/amazon.png";
-    } else if (uri.indexOf("play.google.com") > -1) {
-        imageUri = "/public/img/google-play.png";
     } else if (uri.indexOf("bestbuy.com") > -1) {
         imageUri = "/public/img/best-buy.png";
-    } else if (uri.indexOf("store.sonyentertainmentnetwork.com") > -1) {
-        imageUri = "/public/img/sony-store.png";
-    } else if (uri.indexOf("store.playstation.com") > -1) {
-        imageUri = "/public/img/sony-store.png";
-    } else if (uri.indexOf("gamestop.com") > -1) {
-        imageUri = "/public/img/gamestop.png";
     } else if (uri.indexOf("crutchfield.com") > -1) {
         imageUri = "/public/img/crutchfield.png";
     } else if (uri.indexOf("ebags.com") > -1) {
         imageUri = "/public/img/ebags.png";
+    } else if (uri.indexOf("gamestop.com") > -1) {
+        imageUri = "/public/img/gamestop.png";
+    } else if (uri.indexOf("gog.com") > -1) {
+        imageUri = "/public/img/gog.png";
+    } else if (uri.indexOf("play.google.com") > -1) {
+        imageUri = "/public/img/google-play.png";
+    } else if (uri.indexOf("newegg.com") > -1) {
+        imageUri = "/public/img/newegg.png";
+    } else if (uri.indexOf("nintendo.com") > -1) {
+        imageUri = "/public/img/nintendo.png";
+    } else if (uri.indexOf("store.sonyentertainmentnetwork.com") > -1) {
+        imageUri = "/public/img/sony-store.png";
+    } else if (uri.indexOf("store.playstation.com") > -1) {
+        imageUri = "/public/img/sony-store.png";
     } else if (uri.indexOf("store.steampowered.com") > -1) {
         imageUri = "/public/img/steam.png";
     }
