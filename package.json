@@ -1,38 +1,38 @@
 {
-    "name": "price-tracker",
-    "version": "0.0.1",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/dylants/price-tracker.git"
-    },
-    "scripts": {
-        "start": "nodemon app.js"
-    },
-    "dependencies": {
-        "async": "^0.9.0",
-        "bcrypt": "^0.8.5",
-        "body-parser": "^1.4.3",
-        "cookie-session": "^1.0.2",
-        "consolidate": "^0.10.0",
-        "cron": "^1.0.1",
-        "duration": "^0.2.0",
-        "errorhandler": "^1.1.1",
-        "express": "^4.5.0",
-        "express-namespace": "^0.1.1",
-        "moment": "^2.5.0",
-        "mongoose": "^4.2.3",
-        "passport": "^0.3.0",
-        "passport-local": "^1.0.0",
-        "price-finder": "^4.0.0",
-        "underscore": "^1.5.2"
-    },
-    "devDependencies": {
-        "grunt": "^0.4.1",
-        "grunt-contrib-cssmin": "^0.10.0",
-        "grunt-contrib-jshint": "^0.10.0",
-        "grunt-contrib-requirejs": "^0.4.1",
-        "nodemon": "^1.0.6",
-        "phantom": "^0.8.0",
-        "zombie": "^4.1.0"
-    }
+  "name": "price-tracker",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dylants/price-tracker.git"
+  },
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "dependencies": {
+    "async": "^1.5.2",
+    "bcrypt": "^0.8.6",
+    "body-parser": "^1.4.3",
+    "consolidate": "^0.14.1",
+    "cookie-session": "^1.0.2",
+    "cron": "^1.0.1",
+    "duration": "^0.2.0",
+    "errorhandler": "^1.1.1",
+    "express": "^4.5.0",
+    "express-namespace": "^0.1.1",
+    "moment": "^2.5.0",
+    "mongoose": "^4.2.3",
+    "passport": "^0.3.0",
+    "passport-local": "^1.0.0",
+    "price-finder": "^4.0.0",
+    "underscore": "^1.5.2"
+  },
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-cssmin": "^1.0.1",
+    "grunt-contrib-jshint": "^1.0.0",
+    "grunt-contrib-requirejs": "^1.0.0",
+    "nodemon": "^1.9.2",
+    "phantom": "^2.1.2",
+    "zombie": "^4.1.0"
+  }
 }
