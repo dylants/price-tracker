@@ -1,3 +1,6 @@
+# local files
+items.ts
+
 # dependencies
 /node_modules
 

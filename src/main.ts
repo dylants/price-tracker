@@ -1,13 +1,11 @@
 import chalk from 'chalk';
 import PriceFinder from 'price-finder';
 
-interface Item {
+export interface Item {
   name: string;
   previousPrice: number;
   url: string;
 }
-
-const items: Item[] = [];
 
 const priceFinder = new PriceFinder();
 const log = console.log;
@@ -45,6 +43,15 @@ async function printPrice({ name, previousPrice, url }: Item) {
 async function main() {
   log('');
   log('');
+
+  let items: Item[] = [];
+  try {
+    // @ts-ignore: items file holds items to check
+    items = (await import('../items')).default;
+  } catch (error) {
+    log(chalk.red('no items!'));
+  }
+
   for (const item of items) {
     await printPrice(item);
   }

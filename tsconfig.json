@@ -1,13 +1,10 @@
 {
   "extends": "@tsconfig/node18/tsconfig.json",
   "compilerOptions": {
-    "esModuleInterop": true,
     "declaration": true,
     "declarationDir": "types",
-    "module": "ES6",
     "outDir": "build",
     "strict": true,
-    "target": "ES6"
   },
   "include": [
     "src"

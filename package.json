@@ -6,7 +6,6 @@
     "url": "https://github.com/dylants/price-tracker.git"
   },
   "license": "MIT",
-  "type": "module",
   "scripts": {
     "build:ts": "tsc -p tsconfig-build.json",
     "build": "yarn clean:build && yarn build:ts",
@@ -20,7 +19,7 @@
     "start": "npx ts-node-esm src/main.ts"
   },
   "dependencies": {
-    "chalk": "5.3.0",
+    "chalk": "4.1.2",
     "price-finder": "6.0.0-alpha.0"
   },
   "devDependencies": {
