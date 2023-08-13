@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "chalk": "4.1.2",
-    "price-finder": "6.0.0-alpha.2"
+    "price-finder": "6.0.0-alpha.3"
   },
   "devDependencies": {
     "@tsconfig/node18": "1.0.1",

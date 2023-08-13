@@ -655,10 +655,10 @@ pino@8.7.0:
     sonic-boom "^3.1.0"
     thread-stream "^2.0.0"
 
-price-finder@6.0.0-alpha.2:
-  version "6.0.0-alpha.2"
-  resolved "https://registry.yarnpkg.com/price-finder/-/price-finder-6.0.0-alpha.2.tgz#9fd0d12bd2c3bef2004cc6e091b69cf65d7fc088"
-  integrity sha512-1ZxM9+WfWFd9PMU5oBsbewumn9iV5QUkmzhsd95w9XNdW9cvgV85DkNNrrg5lnXePYZabPqPZBvUWxTwHqUUkQ==
+price-finder@6.0.0-alpha.3:
+  version "6.0.0-alpha.3"
+  resolved "https://registry.yarnpkg.com/price-finder/-/price-finder-6.0.0-alpha.3.tgz#b4c35efe30f3f377b1bbfd7b34bac5254dd69a7d"
+  integrity sha512-2jB1UHjg8x4tqtrTsoSUDblvxaLVuoyR+NaaEGWjDPUzp2tkIS7j62PHvRsjgrfG7fM2Lzpp0Q+CBw0xkQH6BQ==
   dependencies:
     accounting "0.4.1"
     async "3.2.4"

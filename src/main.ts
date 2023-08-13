@@ -23,15 +23,22 @@ async function sleep(duration: number) {
 }
 
 async function printPrice({ name, previousPrice, url }: Item) {
+  log(chalk.gray(`attempting to load price for ${name}...`));
   const price = await priceFinder.findItemPrice(url);
-  log(`${chalk.cyanBright(name)} @ ${chalk.yellowBright(price)}`);
+  log(chalk.gray(`${name} @ ${price}`));
   if (previousPrice && price !== undefined) {
     if (previousPrice > price) {
-      log(chalk.greenBright(`price dropped! previousPrice: ${previousPrice}`));
+      log(chalk.greenBright('price dropped!'));
+      log(chalk.cyanBright(name));
+      log(chalk.yellowBright(`previous price: ${previousPrice}`));
+      log(chalk.greenBright(`current price: ${price}`));
     } else if (previousPrice === price) {
       log(chalk.gray('same price'));
     } else {
-      log(chalk.redBright(`price increase! previousPrice: ${previousPrice}`));
+      log(chalk.redBright('price increase!'));
+      log(chalk.cyanBright(name));
+      log(chalk.yellowBright(`previous price: ${previousPrice}`));
+      log(chalk.redBright(`current price: ${price}`));
     }
   }
   const sleepTime = getSleepTime();
